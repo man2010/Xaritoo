@@ -5,8 +5,6 @@ import Icon from "@/components/ui/icon";
 import { emailUrl, whatsappUrl } from "@/lib/contact-channels";
 
 const opportunities = {
-  mentor: { label: "Become a Mentor", icon: "sprout", question: "What experience or strengths would you bring as a mentor?" },
-  mentee: { label: "Become a Mentee", icon: "seed", question: "What would you like support with this year?" },
   volunteer: { label: "Volunteer", icon: "users", question: "Which skills or type of support would you like to offer?" },
   partner: { label: "Community Partner", icon: "handshake", question: "How would your organization like to collaborate with Xaritoo?" },
   support: { label: "Support Xaritoo", icon: "star", question: "How would you like to support Xaritoo?" },
@@ -15,7 +13,7 @@ const opportunities = {
 type Opportunity = keyof typeof opportunities;
 
 export default function EngagementForm() {
-  const [role, setRole] = useState<Opportunity>("mentor");
+  const [role, setRole] = useState<Opportunity>("volunteer");
   const [method, setMethod] = useState<"whatsapp" | "email">("whatsapp");
   const [form, setForm] = useState({ name: "", email: "", phone: "", location: "", availability: "", message: "" });
 

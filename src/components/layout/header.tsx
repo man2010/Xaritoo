@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { colors as C } from "@/lib/design-tokens";
 import { usePathname } from "next/navigation";
+import { MENTEE_APPLICATION_URL, MENTOR_APPLICATION_URL } from "@/lib/application-links";
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
@@ -117,7 +118,9 @@ export default function Nav() {
           ))}
 
           <a
-            href="/get-involved?role=mentor#apply"
+            href={MENTOR_APPLICATION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               background: C.goldPrimary,
               color: C.textDark,
@@ -135,7 +138,9 @@ export default function Nav() {
             Become a Mentor
           </a>
           <a
-            href="/get-involved?role=mentee#apply"
+            href={MENTEE_APPLICATION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="nav-secondary-cta"
             style={{
               color: C.white,
@@ -226,7 +231,9 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href="/get-involved?role=mentor#apply"
+            href={MENTOR_APPLICATION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => setOpen(false)}
             style={{
               display: 'inline-block',
@@ -243,7 +250,9 @@ export default function Nav() {
             Become a Mentor
           </a>
           <a
-            href="/get-involved?role=mentee#apply"
+            href={MENTEE_APPLICATION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => setOpen(false)}
             style={{ display: 'inline-block', marginTop: 16, marginLeft: 10, color: C.white, textDecoration: 'none', fontSize: 15, fontWeight: 600, padding: '9px 18px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.3)' }}
           >

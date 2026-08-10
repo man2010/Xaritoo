@@ -186,7 +186,7 @@ export default function Programs() {
                 A structured mentorship experience that pairs youth (Seeds) with trained mentors (Gardeners) and caring supervisors (Gardens). Through one-on-one mentoring, cultural experiences, educational activities, and community engagement, participants build confidence, friendships, and life skills.
               </p>
               <a
-                href="/get-involved?role=mentor#apply"
+                href="/get-involved#join-as"
                 style={{ color: C.purplePrimary, fontWeight: 600, fontSize: 15, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, transition: 'gap 0.2s' }}
                 onMouseEnter={(e) => (e.currentTarget.style.gap = '10px')}
                 onMouseLeave={(e) => (e.currentTarget.style.gap = '6px')}

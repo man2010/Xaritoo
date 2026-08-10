@@ -2,6 +2,7 @@
 
 import { colors as C, unsplashImage as img } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
+import { MENTEE_APPLICATION_URL, MENTOR_APPLICATION_URL } from "@/lib/application-links";
 
 export default function Hero() {
   return (
@@ -119,7 +120,9 @@ export default function Hero() {
           {/* CTAs */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
             <a
-              href="/get-involved?role=mentor#apply"
+              href={MENTOR_APPLICATION_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 background: C.goldPrimary,
                 color: C.textDark,
@@ -143,7 +146,9 @@ export default function Hero() {
               Become a Mentor
             </a>
             <a
-              href="/get-involved?role=mentee#apply"
+              href={MENTEE_APPLICATION_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 background: 'rgba(226,200,120,0.12)',
                 color: C.goldLight,

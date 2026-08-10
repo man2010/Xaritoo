@@ -1,11 +1,12 @@
 "use client";
 
 import { colors as C } from "@/lib/design-tokens";
+import { applicationUrlFor } from "@/lib/application-links";
 
 export default function CTABand() {
   return (
     <section
-      id="get-involved"
+      id="join-as"
       style={{
         background: `linear-gradient(135deg, ${C.purpleDark} 0%, ${C.purplePrimary} 50%, ${C.greenGrowth}CC 100%)`,
         padding: '96px 24px',
@@ -63,7 +64,9 @@ export default function CTABand() {
           ].map((btn) => (
             <a
               key={btn.label}
-              href={`/get-involved?role=${btn.role}#apply`}
+              href={applicationUrlFor(btn.role)}
+              target={btn.role === 'mentor' || btn.role === 'mentee' ? '_blank' : undefined}
+              rel={btn.role === 'mentor' || btn.role === 'mentee' ? 'noopener noreferrer' : undefined}
               style={{
                 background: btn.primary ? C.goldPrimary : 'rgba(255,255,255,0.12)',
                 color: btn.primary ? C.textDark : C.white,

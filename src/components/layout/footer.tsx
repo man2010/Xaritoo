@@ -2,6 +2,7 @@
 
 import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
+import { applicationUrlFor } from "@/lib/application-links";
 
 export default function Footer() {
   return (
@@ -137,7 +138,9 @@ export default function Footer() {
               (item) => (
                 <a
                   key={item.role}
-                  href={`/get-involved?role=${item.role}#apply`}
+                  href={applicationUrlFor(item.role)}
+                  target={item.role === 'mentor' || item.role === 'mentee' ? '_blank' : undefined}
+                  rel={item.role === 'mentor' || item.role === 'mentee' ? 'noopener noreferrer' : undefined}
                   style={{
                     display: 'block',
                     color: 'rgba(255,255,255,0.65)',

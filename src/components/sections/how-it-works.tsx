@@ -1,6 +1,7 @@
 import Icon from "@/components/ui/icon";
 import SectionLabel from "@/components/ui/section-label";
 import type { CSSProperties } from "react";
+import { MENTEE_APPLICATION_URL, MENTOR_APPLICATION_URL } from "@/lib/application-links";
 
 const steps = [
   { number: "01", icon: "message", title: "Choose Your Path", text: "Join as a Seed, Gardener, volunteer, community partner, or supporter through a simple guided application." },
@@ -28,8 +29,8 @@ export default function HowItWorks() {
           ))}
         </div>
         <div className="how-it-works__actions">
-          <a href="/get-involved?role=mentor#apply">Become a Mentor</a>
-          <a href="/get-involved?role=mentee#apply">Become a Mentee</a>
+          <a href={MENTOR_APPLICATION_URL} target="_blank" rel="noopener noreferrer">Become a Mentor</a>
+          <a href={MENTEE_APPLICATION_URL} target="_blank" rel="noopener noreferrer">Become a Mentee</a>
         </div>
       </div>
     </section>
