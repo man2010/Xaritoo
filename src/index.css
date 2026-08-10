@@ -329,6 +329,9 @@ main section:hover .section-label span:last-child {
 .club-send-option { position: relative; display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 46px; padding: 9px 12px; color: #746c7a; border: 1px solid rgba(91,44,131,.18); border-radius: 9px; cursor: pointer; font-size: 13px; font-weight: 700; }
 .club-send-option input { position: absolute; opacity: 0; pointer-events: none; }
 .club-send-option--active { color: #5b2c83; border-color: #5b2c83; background: #f8f4fb; box-shadow: inset 0 0 0 1px #5b2c83; }
+.club-expanded-panel, .club-expanded-grid, .club-program-details, .club-join-form { width: 100%; max-width: 100%; box-sizing: border-box; }
+.club-expanded-grid > * { min-width: 0; }
+.club-join-form form, .club-join-form input, .club-join-form select, .club-join-form button { width: 100%; max-width: 100%; box-sizing: border-box; }
 
 /* Home enrichment */
 .how-it-works { padding: 110px 24px; background: #faf8fc; }
@@ -398,6 +401,13 @@ main section:hover .section-label span:last-child {
   .contact-method legend { grid-column: auto; }
   .club-send-method { grid-template-columns: 1fr; }
   .club-send-method legend { grid-column: auto; }
+  .club-expanded-panel { margin-left: 0 !important; margin-right: 0 !important; border-width: 1px !important; border-radius: 14px !important; overflow: hidden !important; }
+  .club-expanded-grid { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; }
+  .club-program-details, .club-join-form { padding: 24px 18px !important; }
+  .club-program-details h3, .club-join-form h4 { overflow-wrap: anywhere; }
+  .club-support-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .club-send-option { width: 100%; }
+  #programs article > div:last-child { padding-left: 20px !important; padding-right: 20px !important; }
   .how-it-works, .growth-journey, .home-faq { padding: 75px 18px !important; }
   .how-it-works__grid { grid-template-columns: 1fr; }
   .process-card { min-height: 0; }

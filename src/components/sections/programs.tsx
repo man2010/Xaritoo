@@ -42,7 +42,7 @@ function ClubJoinForm() {
   }
 
   return (
-    <div style={{ padding: '40px 40px', background: '#fff' }}>
+    <div className="club-join-form" style={{ padding: '40px 40px', background: '#fff', minWidth: 0 }}>
       {sent ? (
         <div style={{ textAlign: 'center', paddingTop: 40 }}>
           <Icon name="book" size={40} style={{ color: C.purplePrimary, margin: '0 auto 12px' }} />
@@ -259,6 +259,7 @@ export default function Programs() {
         {/* ── Xaritoo Club expanded detail panel ── */}
         {clubOpen && (
           <div
+            className="club-expanded-panel"
             style={{
               marginTop: 24,
               borderRadius: 20,
@@ -269,9 +270,9 @@ export default function Programs() {
             }}
           >
             <style>{`@keyframes slideDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }`}</style>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
+            <div className="club-expanded-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
               {/* Left: program details */}
-              <div style={{ padding: '40px 40px', borderRight: `1px solid rgba(91,44,131,0.15)` }}>
+              <div className="club-program-details" style={{ padding: '40px 40px', borderRight: `1px solid rgba(91,44,131,0.15)`, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
                   <Icon name="book" size={28} />
                   <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 700, color: C.textDark, margin: 0 }}>
@@ -284,7 +285,7 @@ export default function Programs() {
                 <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.textMuted, marginBottom: 12 }}>
                   Support includes
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                <div className="club-support-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                   {['Math', 'Science', 'Writing', 'SAT/ACT Preparation', 'Scholarships & College Planning', 'Career & Resume Support'].map((item) => (
                     <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, color: C.textBody }}>
                       <span style={{ width: 20, height: 20, borderRadius: '50%', background: C.purplePrimary, color: C.white, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Icon name="check" size={12} strokeWidth={3} /></span>
@@ -342,6 +343,8 @@ export default function Programs() {
       <style>{`
         @media (max-width: 768px) {
           #programs > div > div:nth-child(2) { grid-template-columns: 1fr !important; }
+          .club-expanded-grid { grid-template-columns: minmax(0, 1fr) !important; }
+          .club-program-details { border-right: 0 !important; border-bottom: 1px solid rgba(91,44,131,0.15) !important; }
         }
       `}</style>
     </section>
