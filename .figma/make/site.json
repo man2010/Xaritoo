@@ -1,0 +1,10 @@
+{
+  "description": "Connects users with local events and activities, helping them discover and participate in community happenings for enhanced social engagement.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
