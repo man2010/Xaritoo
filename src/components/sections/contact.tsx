@@ -5,6 +5,7 @@ import SectionLabel from "@/components/ui/section-label";
 import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
 import { emailUrl } from "@/lib/contact-channels";
+import { socialLinks } from "@/lib/social-links";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
@@ -71,21 +72,23 @@ export default function Contact() {
           </p>
 
           {[
-            { icon: 'mail', label: 'General Email', value: 'senpathcommunity@gmail.com' },
-            { icon: 'mail', label: 'Director', value: 'mamediaw@xaritoo.org' },
-            { icon: 'globe', label: 'Website', value: 'xaritoo.org' },
-            { icon: 'instagram', label: 'Instagram', value: '@xaritoomentorship' },
-            { icon: 'facebook', label: 'Facebook', value: 'Xaritoo Mentorship' },
-            { icon: 'music', label: 'TikTok', value: '@xaritoomentorship' },
-            { icon: 'play', label: 'YouTube', value: '@XaritooMentorship' },
+            { icon: 'instagram', label: 'Instagram', value: '@xaritoomentorship', href: socialLinks.instagram },
+            { icon: 'facebook', label: 'Facebook', value: 'Xaritoo Mentorship', href: socialLinks.facebook },
+            { icon: 'music', label: 'TikTok', value: '@xaritoomentorship', href: socialLinks.tiktok },
           ].map((c) => (
-            <div
+            <a
               key={c.label}
+              href={c.href}
+              target={c.href.startsWith('https://') ? '_blank' : undefined}
+              rel={c.href.startsWith('https://') ? 'noopener noreferrer' : undefined}
+              aria-label={`${c.label}: ${c.value}`}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: 14,
                 marginBottom: 16,
+                textDecoration: 'none',
+                borderRadius: 10,
               }}
             >
               <span
@@ -99,6 +102,7 @@ export default function Contact() {
                   justifyContent: 'center',
                   fontSize: 18,
                   flexShrink: 0,
+                  color: C.purplePrimary,
                 }}
               >
                 <Icon name={c.icon} size={18} />
@@ -109,7 +113,7 @@ export default function Contact() {
                 </div>
                 <div style={{ fontSize: 15, color: C.textBody }}>{c.value}</div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 

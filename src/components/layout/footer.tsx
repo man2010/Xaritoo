@@ -3,6 +3,7 @@
 import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
 import { applicationUrlFor } from "@/lib/application-links";
+import { socialLinks } from "@/lib/social-links";
 
 export default function Footer() {
   return (
@@ -173,29 +174,29 @@ export default function Footer() {
               Connect
             </h4>
             {[
-              { icon: 'mail', label: 'senpathcommunity@gmail.com' },
-              { icon: 'mail', label: 'mamediaw@xaritoo.org' },
-              { icon: 'globe', label: 'xaritoo.org' },
-              { icon: 'instagram', label: 'Instagram @xaritoomentorship' },
-              { icon: 'facebook', label: 'Facebook Xaritoo Mentorship' },
-              { icon: 'music', label: 'TikTok @xaritoomentorship' },
-              { icon: 'play', label: 'YouTube @XaritooMentorship' },
-              { icon: 'message', label: 'WhatsApp Channel' },
+              { icon: 'instagram', label: 'Instagram @xaritoomentorship', href: socialLinks.instagram },
+              { icon: 'facebook', label: 'Facebook Xaritoo Mentorship', href: socialLinks.facebook },
+              { icon: 'music', label: 'TikTok @xaritoomentorship', href: socialLinks.tiktok },
+              { icon: 'message', label: 'WhatsApp Channel', href: socialLinks.whatsapp },
             ].map((c) => (
-              <div
+              <a
                 key={c.label}
+                href={c.href}
+                target={c.href.startsWith('https://') ? '_blank' : undefined}
+                rel={c.href.startsWith('https://') ? 'noopener noreferrer' : undefined}
                 style={{
                   display: 'flex',
                   alignItems: 'flex-start',
                   gap: 8,
                   marginBottom: 10,
+                  textDecoration: 'none',
                 }}
               >
                 <Icon name={c.icon} size={14} style={{ color: C.goldLight, flexShrink: 0 }} />
                 <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.4 }}>
                   {c.label}
                 </span>
-              </div>
+              </a>
             ))}
           </div>
         </div>

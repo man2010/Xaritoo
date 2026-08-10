@@ -11,6 +11,7 @@ export default function Framework() {
       role: 'Seed',
       who: 'Youth Participants',
       color: '#4F7D55',
+      accentColor: '#A9D5AE',
       bgColor: 'rgba(79,125,85,0.12)',
       text: 'Seeds are the young people at the heart of Xaritoo — each with unique gifts, questions, and potential waiting to be cultivated with the right support, guidance, and community.',
     },
@@ -19,6 +20,7 @@ export default function Framework() {
       role: 'Gardener',
       who: 'Mentors',
       color: C.goldPrimary,
+      accentColor: C.goldLight,
       bgColor: 'rgba(181,138,42,0.12)',
       text: 'Gardeners are dedicated mentors who walk alongside youth — providing encouragement, accountability, wisdom, and the care needed for each Seed to take root and flourish.',
     },
@@ -27,6 +29,7 @@ export default function Framework() {
       role: 'Garden',
       who: 'Supervisors & Community',
       color: C.purplePrimary,
+      accentColor: '#D9B9F0',
       bgColor: 'rgba(91,44,131,0.15)',
       text: 'Gardens are the supervisors, families, and community partners who create the conditions for growth — building the environment where Seeds and Gardeners can thrive together.',
     },
@@ -113,6 +116,7 @@ export default function Framework() {
                   fontSize: 28,
                   marginBottom: 20,
                   border: `1px solid ${c.color}40`,
+                  color: c.accentColor,
                 }}
               >
                 <Icon name={c.icon} size={32} />
@@ -123,7 +127,7 @@ export default function Framework() {
                   fontWeight: 700,
                   letterSpacing: '0.14em',
                   textTransform: 'uppercase',
-                  color: c.color,
+                  color: c.accentColor,
                   marginBottom: 6,
                 }}
               >

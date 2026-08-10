@@ -200,6 +200,17 @@ article:hover img {
   -webkit-backdrop-filter: blur(18px) saturate(150%);
 }
 
+#contact a:hover > span:first-child {
+  color: #fff;
+  background: #5b2c83 !important;
+  transform: translateY(-2px);
+}
+
+footer a:hover {
+  color: rgba(255,255,255,.95) !important;
+  transform: translateX(2px);
+}
+
 .mobile-navigation {
   transform-origin: top;
   animation: menu-open 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
