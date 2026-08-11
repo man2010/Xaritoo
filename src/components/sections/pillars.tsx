@@ -35,9 +35,9 @@ export default function Pillars() {
   ]
 
   return (
-    <section style={{ background: C.purpleLavender, padding: "96px 24px" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
+    <section className="pillars-section" style={{ background: C.purpleLavender, padding: "96px 24px" }}>
+      <div className="pillars-container" style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <div className="pillars-heading" style={{ textAlign: "center", marginBottom: 56 }}>
           <SectionLabel>Our Approach</SectionLabel>
           <h2
             style={{
@@ -53,7 +53,7 @@ export default function Pillars() {
           </h2>
         </div>
 
-        <div className="pillars-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+        <div className="pillars-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 24 }}>
           {pillars.map((pillar) => (
             <article
               key={pillar.title}
@@ -64,6 +64,9 @@ export default function Pillars() {
                 overflow: "hidden",
                 borderBottom: `4px solid ${C.purplePrimary}`,
                 transition: "transform 0.2s, box-shadow 0.2s",
+                minWidth: 0,
+                width: "100%",
+                boxSizing: "border-box",
               }}
               onMouseEnter={(event) => {
                 event.currentTarget.style.transform = "translateY(-4px)"
@@ -86,7 +89,7 @@ export default function Pillars() {
                 />
               </div>
 
-              <div style={{ padding: "30px 32px 36px" }}>
+              <div className="pillar-content" style={{ padding: "30px 32px 36px", minWidth: 0 }}>
                 <Icon name={pillar.icon} size={40} style={{ color: C.purplePrimary, marginBottom: 20 }} />
                 <h3 style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 700, color: C.textDark, marginBottom: 12 }}>
                   {pillar.title}
@@ -99,7 +102,30 @@ export default function Pillars() {
       </div>
 
       <style>{`
+        .pillars-section,
+        .pillars-container,
+        .pillars-grid,
+        .pillar-card,
+        .pillar-photo,
+        .pillar-content {
+          box-sizing: border-box;
+          max-width: 100%;
+          min-width: 0;
+        }
+        .pillars-section {
+          width: 100%;
+          overflow: hidden;
+        }
+        .pillars-container,
+        .pillars-grid {
+          width: 100%;
+        }
+        .pillar-card {
+          contain: layout paint;
+        }
         .pillar-photo__image {
+          display: block;
+          max-width: 100%;
           transition: transform 600ms cubic-bezier(.2,.8,.2,1);
         }
         .pillar-photo__image--rotated {
@@ -116,7 +142,12 @@ export default function Pillars() {
           .pillar-photo { height: 300px !important; }
         }
         @media (max-width: 600px) {
+          .pillars-section { padding: 68px 16px !important; }
+          .pillars-heading { margin-bottom: 36px !important; }
+          .pillars-grid { gap: 18px !important; }
           .pillar-photo { height: 240px !important; }
+          .pillar-content { padding: 26px 22px 30px !important; }
+          .pillar-content p { overflow-wrap: anywhere; }
         }
         @media (prefers-reduced-motion: reduce) {
           .pillar-photo__image { transition: none; }
