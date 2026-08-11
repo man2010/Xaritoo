@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { colors as C } from "@/lib/design-tokens";
 import { usePathname } from "next/navigation";
 import { MENTEE_APPLICATION_URL, MENTOR_APPLICATION_URL } from "@/lib/application-links";
+import Image from "next/image";
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
@@ -76,21 +77,7 @@ export default function Nav() {
             gap: 8,
           }}
         >
-          <span
-            style={{
-              display: 'inline-flex',
-              width: 32,
-              height: 32,
-              borderRadius: 6,
-              background: C.goldPrimary,
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 16,
-              fontWeight: 800,
-            }}
-          >
-            X
-          </span>
+          <Image src="/images/xaritoo-logo.jpeg" alt="" width={1100} height={1100} priority sizes="44px" style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 10 }} />
           XARITOO
         </a>
 

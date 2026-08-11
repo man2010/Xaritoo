@@ -3,6 +3,7 @@
 import SectionLabel from "@/components/ui/section-label";
 import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
+import Image from "next/image";
 
 export default function Impact() {
   const stats = [
@@ -93,6 +94,20 @@ export default function Impact() {
             </div>
           ))}
         </div>
+
+        <figure style={{ maxWidth: 560, margin: '0 auto 34px', padding: 10, background: C.white, borderRadius: 22, boxShadow: '0 22px 55px rgba(50,25,77,0.12)', border: '1px solid rgba(91,44,131,0.08)' }}>
+          <Image
+            src="/images/xaritoo-impact.jpeg"
+            alt="Xaritoo Summer Pilot program materials prepared for participants"
+            width={768}
+            height={1024}
+            sizes="(max-width: 640px) 92vw, 560px"
+            style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 14 }}
+          />
+          <figcaption style={{ padding: '13px 10px 5px', color: C.textMuted, fontSize: 12, lineHeight: 1.5, textAlign: 'center' }}>
+            Resources prepared for participants in the Xaritoo Summer Pilot.
+          </figcaption>
+        </figure>
 
         <p
           style={{

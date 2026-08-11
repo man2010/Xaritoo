@@ -3,13 +3,16 @@
 import SectionLabel from "@/components/ui/section-label";
 import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
+import Image from "next/image";
 
 export default function Framework() {
   const cards = [
     {
       icon: 'seed',
+      image: '/images/xaritoo-mentee-model.jpeg',
+      imageAlt: 'Xaritoo mentee emblem — I am a Seed, I am growing',
       role: 'Seed',
-      who: 'Youth Participants',
+      who: 'Mentees',
       color: '#4F7D55',
       accentColor: '#A9D5AE',
       bgColor: 'rgba(79,125,85,0.12)',
@@ -17,6 +20,8 @@ export default function Framework() {
     },
     {
       icon: 'sprout',
+      image: '/images/xaritoo-mentor-model.jpeg',
+      imageAlt: 'Xaritoo mentor emblem — I am a Gardener, I help Seeds grow',
       role: 'Gardener',
       who: 'Mentors',
       color: C.goldPrimary,
@@ -26,6 +31,8 @@ export default function Framework() {
     },
     {
       icon: 'tree',
+      image: '/images/xaritoo-supervisor-model.jpeg',
+      imageAlt: 'Xaritoo supervisor emblem — I am the Garden, I create the environment where growth happens',
       role: 'Garden',
       who: 'Supervisors & Community',
       color: C.purplePrimary,
@@ -104,23 +111,29 @@ export default function Framework() {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
               }}
             >
-              <div
-                style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 14,
-                  background: c.bgColor,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: 28,
-                  marginBottom: 20,
-                  border: `1px solid ${c.color}40`,
-                  color: c.accentColor,
-                }}
-              >
-                <Icon name={c.icon} size={32} />
-              </div>
+              {c.image ? (
+                <div style={{ width: 160, height: 160, margin: '0 auto 24px', overflow: 'hidden', borderRadius: '50%', border: `3px solid ${c.accentColor}`, boxShadow: `0 12px 30px ${c.color}35` }}>
+                  <Image src={c.image} alt={c.imageAlt} width={1254} height={1254} sizes="160px" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+              ) : (
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: 14,
+                    background: c.bgColor,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 28,
+                    marginBottom: 20,
+                    border: `1px solid ${c.color}40`,
+                    color: c.accentColor,
+                  }}
+                >
+                  <Icon name={c.icon} size={32} />
+                </div>
+              )}
               <div
                 style={{
                   fontSize: 11,

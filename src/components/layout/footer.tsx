@@ -4,6 +4,7 @@ import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
 import { applicationUrlFor } from "@/lib/application-links";
 import { socialLinks } from "@/lib/social-links";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -21,35 +22,9 @@ export default function Footer() {
         >
           {/* Brand */}
           <div>
-            <div
-              style={{
-                fontFamily: 'var(--font-serif)',
-                fontWeight: 700,
-                fontSize: 20,
-                color: C.white,
-                marginBottom: 12,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-              }}
-            >
-              <span
-                style={{
-                  display: 'inline-flex',
-                  width: 28,
-                  height: 28,
-                  borderRadius: 5,
-                  background: C.goldPrimary,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: 14,
-                  fontWeight: 800,
-                }}
-              >
-                X
-              </span>
-              XARITOO
-            </div>
+            <a href="/" aria-label="Xaritoo home" style={{ display: 'inline-block', marginBottom: 14 }}>
+              <Image src="/images/xaritoo-logo.jpeg" alt="Xaritoo — Mentorship, Culture, Connection" width={1100} height={1100} sizes="92px" style={{ width: 92, height: 92, objectFit: 'cover', borderRadius: 18 }} />
+            </a>
             <p
               style={{
                 fontSize: 13,

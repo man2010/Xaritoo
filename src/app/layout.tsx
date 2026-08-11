@@ -27,6 +27,10 @@ export const metadata: Metadata = {
   description:
     "Xaritoo helps young people grow through mentorship, culture, education, leadership, and community.",
   applicationName: "Xaritoo",
+  icons: {
+    icon: "/images/xaritoo-logo.jpeg",
+    apple: "/images/xaritoo-logo.jpeg",
+  },
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",

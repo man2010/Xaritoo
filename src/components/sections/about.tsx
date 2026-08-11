@@ -1,5 +1,5 @@
 import SectionLabel from "@/components/ui/section-label";
-import { colors as C, unsplashImage as img } from "@/lib/design-tokens";
+import { colors as C } from "@/lib/design-tokens";
 import Image from "next/image";
 
 export default function About() {
@@ -32,21 +32,20 @@ export default function About() {
             }}
           />
           <Image
-            src={img('1573497701240-345a300b8d36', 700, 500)}
-            alt="Youth mentorship group gathering around a table"
-            width={700}
-            height={500}
+            src="/images/xaritoo-who-we-are.jpeg"
+            alt="Three Xaritoo participants together at an outdoor community event"
+            width={1365}
+            height={2048}
             sizes="(max-width: 900px) 100vw, 50vw"
             style={{
               position: 'relative',
               width: '100%',
-              height: 420,
-              objectFit: 'cover',
+              height: 'auto',
+              objectFit: 'contain',
               borderRadius: 16,
               display: 'block',
             }}
           />
-          {/* TODO: replace with approved consented Xaritoo photography */}
           <div
             style={{
               position: 'absolute',

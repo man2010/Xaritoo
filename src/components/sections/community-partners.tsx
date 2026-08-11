@@ -3,6 +3,7 @@
 import SectionLabel from "@/components/ui/section-label";
 import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
+import Image from "next/image";
 
 export default function CommunityPartners() {
   return (
@@ -28,9 +29,9 @@ export default function CommunityPartners() {
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center' }}>
           {[
-            { icon: 'handshake', name: 'Senegalese Association of Chicago', abbr: 'SAC' },
-            { icon: 'graduation', name: 'BPAC Bilingual Parent Advisory Committee', abbr: 'BPAC' },
-            { icon: 'star', name: 'Agents of Hope', abbr: '' },
+            { icon: 'handshake', image: '/images/partner-sac.jpeg', imageAlt: 'Senegalese Association of Chicago logo', name: 'Senegalese Association of Chicago', detail: 'SAC — Community Partner' },
+            { icon: 'graduation', image: '/images/partner-bpac-marquardt.jpeg', imageAlt: 'Marquardt School District 15 logo', name: 'BPAC Bilingual Parent Advisory Committee', detail: 'A program of Marquardt School District 15' },
+            { icon: 'star', image: '/images/partner-agents-of-hope.jpeg', imageAlt: 'Agents of Hope logo', name: 'Agents of Hope', detail: 'Community Partner' },
           ].map((p) => (
             <div
               key={p.name}
@@ -48,12 +49,18 @@ export default function CommunityPartners() {
               onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(79,125,85,0.15)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
               onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              <div style={{ width: 44, height: 44, borderRadius: 10, background: C.greenGrowth, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
-                <Icon name={p.icon} size={21} />
-              </div>
+              {p.image ? (
+                <div style={{ width: 72, height: 72, overflow: 'hidden', borderRadius: 14, background: C.white, border: '1px solid rgba(79,125,85,0.18)', flexShrink: 0 }}>
+                  <Image src={p.image} alt={p.imageAlt} width={1024} height={1024} sizes="72px" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                </div>
+              ) : (
+                <div style={{ width: 44, height: 44, borderRadius: 10, background: C.greenGrowth, color: C.white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
+                  <Icon name={p.icon} size={21} />
+                </div>
+              )}
               <div style={{ textAlign: 'left' }}>
                 <div style={{ fontWeight: 700, fontSize: 15, color: C.textDark, lineHeight: 1.3 }}>{p.name}</div>
-                {p.abbr && <div style={{ fontSize: 12, color: C.textMuted, marginTop: 2 }}>{p.abbr} — Community Partner</div>}
+                {p.detail && <div style={{ fontSize: 12, color: C.textMuted, marginTop: 3, maxWidth: 230, lineHeight: 1.4 }}>{p.detail}</div>}
               </div>
             </div>
           ))}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import SectionLabel from "@/components/ui/section-label";
-import { colors as C, unsplashImage as img } from "@/lib/design-tokens";
+import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
 import { emailUrl, whatsappUrl } from "@/lib/contact-channels";
 
@@ -165,14 +165,13 @@ export default function Programs() {
           >
             <div style={{ position: 'relative', height: 240, background: C.purpleLavender, overflow: 'hidden' }}>
               <Image
-                src={img('1498661694102-0a3793edbe74', 700, 400)}
-                alt="Group of young people standing together outdoors"
-                width={700}
-                height={400}
+                src="/images/xaritoo-summer-program.jpeg"
+                alt="Xaritoo Summer Program participants gathered together"
+                width={2048}
+                height={1365}
                 sizes="(max-width: 900px) 100vw, 50vw"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 54%' }}
               />
-              {/* TODO: replace with approved consented Xaritoo photography */}
               <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, transparent 50%, ${C.purpleDark}88)` }} />
               <span style={{ position: 'absolute', top: 16, left: 16, background: C.goldPrimary, color: C.textDark, fontSize: 12, fontWeight: 700, padding: '4px 10px', borderRadius: 6, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                 Summer Program
@@ -210,14 +209,13 @@ export default function Programs() {
           >
             <div style={{ position: 'relative', height: 240, background: C.purpleLavender, overflow: 'hidden' }}>
               <Image
-                src={img('1758270705518-b61b40527e76', 700, 400)}
-                alt="Diverse students collaborating around a laptop"
-                width={700}
-                height={400}
+                src="/images/xaritoo-student-support.jpeg"
+                alt="Xaritoo students working together during an academic support session"
+                width={2048}
+                height={1365}
                 sizes="(max-width: 900px) 100vw, 50vw"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 52%' }}
               />
-              {/* TODO: replace with approved consented Xaritoo photography */}
               <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, transparent 50%, ${C.purpleDark}88)` }} />
               <span style={{ position: 'absolute', top: 16, left: 16, background: C.goldPrimary, color: C.textDark, fontSize: 12, fontWeight: 700, padding: '4px 10px', borderRadius: 6, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                 Fall &amp; Spring — Student Support
