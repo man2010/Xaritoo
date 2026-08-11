@@ -23,9 +23,9 @@ export default function Testimonials() {
   ]
 
   return (
-    <section style={{ background: C.purpleLavender, padding: '96px 24px' }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: 56 }}>
+    <section className="testimonials-section" style={{ background: C.purpleLavender, padding: '96px 24px' }}>
+      <div className="testimonials-container" style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div className="testimonials-heading" style={{ textAlign: 'center', marginBottom: 56 }}>
           <SectionLabel>Voices from Our Community</SectionLabel>
           <h2
             style={{
@@ -42,15 +42,17 @@ export default function Testimonials() {
         </div>
 
         <div
+          className="testimonials-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
+            gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
             gap: 24,
           }}
         >
           {testimonials.map((t, i) => (
             <blockquote
               key={i}
+              className="testimonial-card"
               style={{
                 background: C.white,
                 borderRadius: 20,
@@ -58,6 +60,9 @@ export default function Testimonials() {
                 margin: 0,
                 position: 'relative',
                 border: `1px solid rgba(91,44,131,0.08)`,
+                minWidth: 0,
+                maxWidth: '100%',
+                boxSizing: 'border-box',
               }}
             >
               <span
@@ -112,10 +117,34 @@ export default function Testimonials() {
       </div>
 
       <style>{`
+        .testimonials-section {
+          width: 100%;
+          max-width: 100%;
+          overflow: hidden;
+          box-sizing: border-box;
+        }
+        .testimonials-container,
+        .testimonials-grid,
+        .testimonial-card {
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
+        }
+        .testimonial-card p,
+        .testimonial-card footer,
+        .testimonial-card div {
+          max-width: 100%;
+          overflow-wrap: anywhere;
+        }
         @media (max-width: 900px) {
-          section:has([style*="Voices from Our Community"]) > div > div:last-child {
-            grid-template-columns: 1fr !important;
-          }
+          .testimonials-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 600px) {
+          .testimonials-section { padding: 68px 16px !important; }
+          .testimonials-heading { margin-bottom: 36px !important; }
+          .testimonials-grid { gap: 16px !important; }
+          .testimonial-card { padding: 28px 22px !important; }
         }
       `}</style>
     </section>
