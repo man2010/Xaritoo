@@ -17,10 +17,9 @@ export default function Pillars() {
     },
     {
       icon: "globe",
-      image: "/images/mentor-gallery-02.jpeg",
+      image: "/images/xaritoo-culture.jpeg",
       imageAlt: "A Xaritoo cultural activity featuring art, food, and community traditions",
       imagePosition: "center",
-      rotated: true,
       title: "Culture",
       text: "Celebrating cultural identity as a source of strength. We help youth embrace their heritage while navigating American life, honoring who they are and where they come from.",
     },
@@ -84,7 +83,7 @@ export default function Pillars() {
                   width={768}
                   height={1024}
                   sizes="(max-width: 900px) 92vw, 33vw"
-                  className={pillar.rotated ? "pillar-photo__image pillar-photo__image--rotated" : "pillar-photo__image"}
+                  className="pillar-photo__image"
                   style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: pillar.imagePosition }}
                 />
               </div>
@@ -128,14 +127,8 @@ export default function Pillars() {
           max-width: 100%;
           transition: transform 600ms cubic-bezier(.2,.8,.2,1);
         }
-        .pillar-photo__image--rotated {
-          transform: rotate(90deg) scale(1.38);
-        }
-        .pillar-card:hover .pillar-photo__image:not(.pillar-photo__image--rotated) {
+        .pillar-card:hover .pillar-photo__image {
           transform: scale(1.045);
-        }
-        .pillar-card:hover .pillar-photo__image--rotated {
-          transform: rotate(90deg) scale(1.43);
         }
         @media (max-width: 900px) {
           .pillars-grid { grid-template-columns: 1fr !important; }
