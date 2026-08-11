@@ -1,6 +1,6 @@
 import SectionLabel from "@/components/ui/section-label";
 
-const questions = [
+export const questions = [
   { question: "Who can participate in Xaritoo?", answer: "Xaritoo welcomes young people from all backgrounds and is especially committed to supporting youth who benefit from consistent mentorship, cultural connection, educational guidance, and community." },
   { question: "What is the difference between a Seed, Gardener, and Garden?", answer: "Seeds are young participants, Gardeners are trained mentors, and Gardens are the supervisors, families, and community partners who create the conditions for safe and lasting growth." },
   { question: "How can I become a mentor or mentee?", answer: "Choose the appropriate opportunity on the Get Involved page, answer the short questions, and send your request directly to the Xaritoo team through WhatsApp or email." },
