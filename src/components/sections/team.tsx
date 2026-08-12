@@ -10,7 +10,7 @@ export default function Team() {
   const galleryRef = useRef<HTMLDivElement>(null)
   const mentorGallery = [
     { src: "/images/mentor-gallery-01.jpeg", alt: "Xaritoo mentors gathered at a community event" },
-    { src: "/images/mentor-gallery-02.jpeg", alt: "Xaritoo cultural activity and community display", rotated: true },
+    { src: "/images/xaritoo-culture.jpeg", alt: "Xaritoo cultural activity and community display" },
     { src: "/images/mentor-gallery-03.jpeg", alt: "Xaritoo mentors and mentees together during a program activity" },
     { src: "/images/mentor-gallery-04.jpeg", alt: "A Xaritoo mentor with mentees at a cultural event" },
     { src: "/images/mentor-gallery-05.jpeg", alt: "A Xaritoo mentor supporting three mentees" },
@@ -110,7 +110,7 @@ export default function Team() {
                   width={768}
                   height={1024}
                   sizes="(max-width: 600px) 82vw, (max-width: 900px) 42vw, 320px"
-                  className={photo.rotated ? "mentor-gallery__image mentor-gallery__image--rotated" : "mentor-gallery__image"}
+                  className="mentor-gallery__image"
                 />
               </figure>
             ))}
@@ -247,14 +247,8 @@ export default function Team() {
           object-fit: cover;
           transition: transform 600ms cubic-bezier(.2,.8,.2,1);
         }
-        .mentor-gallery__image--rotated {
-          transform: rotate(90deg) scale(1.38);
-        }
-        .mentor-gallery__item:hover .mentor-gallery__image:not(.mentor-gallery__image--rotated) {
+        .mentor-gallery__item:hover .mentor-gallery__image {
           transform: scale(1.045);
-        }
-        .mentor-gallery__item:hover .mentor-gallery__image--rotated {
-          transform: rotate(90deg) scale(1.43);
         }
         @media (max-width: 900px) {
           .team-grid { grid-template-columns: 1fr !important; }
