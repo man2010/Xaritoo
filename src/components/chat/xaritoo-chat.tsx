@@ -11,20 +11,15 @@ type Message = {
   timestamp: string;
 };
 
-const SUGGESTIONS = {
-  en: [
-    { label: "📚 Register My Student (Parents)", prompt: "How do I register my child for the Xaritoo Club?" },
-    { label: "🌿 Become a Mentor (Gardener)", prompt: "How can I apply to become a volunteer mentor?" },
-    { label: "🌱 Seed–Gardener Framework", prompt: "Can you explain the Seed–Gardener–Garden framework?" },
-    { label: "🤝 Community Partners & Contact", prompt: "Who are your partners and how do I contact Xaritoo?" },
-  ],
-  fr: [
-    { label: "📚 Inscrire mon enfant au Club (Parents)", prompt: "Comment puis-je inscrire mon enfant au Xaritoo Club ?" },
-    { label: "🌿 Devenir Mentor (Gardener)", prompt: "Comment puis-je devenir mentor bénévole pour Xaritoo ?" },
-    { label: "🌱 Le modèle Seed–Gardener", prompt: "Pouvez-vous m'expliquer le modèle Seed–Gardener–Garden ?" },
-    { label: "🤝 Partenaires & Contact", prompt: "Qui sont les partenaires de Xaritoo et comment vous contacter ?" },
-  ],
-};
+const SUGGESTIONS = [
+  { label: "📚 Register My Student (Parents)", prompt: "How do I register my child for the Xaritoo Club?" },
+  { label: "🌿 Become a Mentor (Gardener)", prompt: "How can I apply to become a volunteer mentor?" },
+  { label: "🌱 Seed–Gardener Framework", prompt: "Can you explain the Seed–Gardener–Garden framework?" },
+  { label: "🤝 Community Partners & Contact", prompt: "Who are your partners and how do I contact Xaritoo?" },
+];
+
+const INITIAL_WELCOME_MESSAGE =
+  "Hello! 👋 I am the official AI assistant of **Xaritoo**.\n\nI can answer any questions about our mentorship programs, student academic support (*Xaritoo Club* for parents), our *Seed–Gardener–Garden* framework, or guide your application.\n\nHow can I help you today?";
 
 function FormattedMessage({ content, isUser }: { content: string; isUser: boolean }) {
   if (isUser) {
@@ -33,7 +28,6 @@ function FormattedMessage({ content, isUser }: { content: string; isUser: boolea
 
   // Helper to parse bold (**bold**) and links (urls or [label](url))
   const renderInline = (text: string) => {
-    // Regex matches [label](url) or standalone url or **bold**
     const regex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s]+)|(\*\*.*?\*\*)/g;
     const parts: ReactNode[] = [];
     let lastIndex = 0;
@@ -121,7 +115,7 @@ function FormattedMessage({ content, isUser }: { content: string; isUser: boolea
     // Clean stray leading pipes or table formatting
     line = line.replace(/^\|\s*|\s*\|$/g, "");
     if (/^[-|\s]+$/.test(line)) {
-      return; // Ignore table divider lines like |---|---|
+      return;
     }
 
     if (!line) {
@@ -188,41 +182,20 @@ function FormattedMessage({ content, isUser }: { content: string; isUser: boolea
 
 export default function XaritooChat() {
   const [isOpen, setIsOpen] = useState(false);
-  const [lang, setLang] = useState<"en" | "fr">("en");
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const welcomeMessages: Record<"en" | "fr", string> = {
-    en: "Hello! 👋 I am the official AI assistant of **Xaritoo**.\n\nI can answer any questions about our mentorship programs, student academic support (*Xaritoo Club* for parents), our *Seed–Gardener–Garden* framework, or guide your application.\n\nHow can I help you today?",
-    fr: "Bonjour ! 👋 Je suis l'assistant virtuel officiel de **Xaritoo**.\n\nJe suis là pour répondre à toutes vos questions sur nos programmes de mentorat, le soutien scolaire pour vos enfants (*Xaritoo Club*), notre philosophie *Seed–Gardener–Garden*, ou pour vous guider dans votre inscription.\n\nComment puis-je vous aider aujourd'hui ?",
-  };
 
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome-en",
       role: "assistant",
-      content: welcomeMessages.en,
+      content: INITIAL_WELCOME_MESSAGE,
       timestamp: "Now",
     },
   ]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const switchLanguage = (newLang: "en" | "fr") => {
-    setLang(newLang);
-    // If only welcome message exists, reset to the new language's welcome message
-    if (messages.length <= 1) {
-      setMessages([
-        {
-          id: `welcome-${newLang}`,
-          role: "assistant",
-          content: welcomeMessages[newLang],
-          timestamp: newLang === "en" ? "Now" : "À l'instant",
-        },
-      ]);
-    }
-  };
 
   useEffect(() => {
     if (isOpen) {
@@ -284,9 +257,7 @@ export default function XaritooChat() {
         id: `err-${Date.now()}`,
         role: "assistant",
         content:
-          lang === "en"
-            ? "Sorry, I am temporarily having trouble connecting to the server. You can contact our team directly at **mamediaw@xaritoo.org** or by phone at **+1-312-804-3857**."
-            : "Désolé, je rencontre une petite difficulté pour joindre le serveur. Vous pouvez nous contacter directement par email à **mamediaw@xaritoo.org** ou par téléphone au **+1-312-804-3857**.",
+          "Sorry, I am temporarily having trouble connecting to the server. You can contact our team directly at **mamediaw@xaritoo.org** or by phone at **+1-312-804-3857**.",
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -303,7 +274,7 @@ export default function XaritooChat() {
           type="button"
           onClick={() => setIsOpen(true)}
           className="xaritoo-chat-fab"
-          aria-label={lang === "en" ? "Open Xaritoo AI Chat" : "Ouvrir le chat IA Xaritoo"}
+          aria-label="Open Xaritoo AI Chat"
           style={{
             position: "fixed",
             bottom: 24,
@@ -346,7 +317,7 @@ export default function XaritooChat() {
             />
             <Icon name="sprout" size={20} style={{ color: C.goldLight }} />
           </div>
-          <span>{lang === "en" ? "Xaritoo AI Assistant" : "Assistant IA Xaritoo"}</span>
+          <span>Xaritoo AI Assistant</span>
         </button>
       )}
 
@@ -355,7 +326,7 @@ export default function XaritooChat() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={lang === "en" ? "Xaritoo AI Assistant" : "Assistant IA Xaritoo"}
+          aria-label="Xaritoo AI Assistant"
           className="xaritoo-chat-window"
           style={{
             position: "fixed",
@@ -419,22 +390,6 @@ export default function XaritooChat() {
               border-color: #5B2C83;
               transform: translateY(-1px);
             }
-            .lang-pill {
-              background: rgba(255,255,255,0.15);
-              border: 1px solid rgba(255,255,255,0.25);
-              color: rgba(255,255,255,0.85);
-              padding: 3px 8px;
-              border-radius: 6px;
-              font-size: 11px;
-              font-weight: 700;
-              cursor: pointer;
-              transition: all 0.2s;
-            }
-            .lang-pill--active {
-              background: #B58A2A;
-              border-color: #E2C878;
-              color: #251C2D;
-            }
             @media (max-width: 640px) {
               .xaritoo-chat-window {
                 width: 100vw !important;
@@ -486,31 +441,13 @@ export default function XaritooChat() {
                 </div>
                 <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.75)", display: "flex", alignItems: "center", gap: 4 }}>
                   <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80" }} />
-                  {lang === "en" ? "Online • 24/7 Support" : "En ligne • Support 24/7"}
+                  Online • 24/7 Support
                 </div>
               </div>
             </div>
 
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              {/* Language Switcher Button Group */}
-              <div style={{ display: "flex", gap: 4, background: "rgba(0,0,0,0.2)", padding: "2px 3px", borderRadius: 8 }}>
-                <button
-                  type="button"
-                  className={`lang-pill ${lang === "en" ? "lang-pill--active" : ""}`}
-                  onClick={() => switchLanguage("en")}
-                >
-                  EN
-                </button>
-                <button
-                  type="button"
-                  className={`lang-pill ${lang === "fr" ? "lang-pill--active" : ""}`}
-                  onClick={() => switchLanguage("fr")}
-                >
-                  FR
-                </button>
-              </div>
-
-              {/* Reset History */}
+              {/* Reset / Refresh Chat History */}
               <button
                 type="button"
                 onClick={() => {
@@ -518,37 +455,42 @@ export default function XaritooChat() {
                     {
                       id: `reset-${Date.now()}`,
                       role: "assistant",
-                      content:
-                        lang === "en"
-                          ? "Conversation refreshed. How can I help you?"
-                          : "Conversation réinitialisée. Comment puis-je vous aider ?",
-                      timestamp: lang === "en" ? "Now" : "À l'instant",
+                      content: INITIAL_WELCOME_MESSAGE,
+                      timestamp: "Now",
                     },
                   ]);
                 }}
-                aria-label={lang === "en" ? "Reset chat" : "Réinitialiser la conversation"}
-                title={lang === "en" ? "Clear conversation" : "Effacer la conversation"}
+                aria-label="Restart conversation"
+                title="Restart conversation"
                 style={{
-                  background: "none",
-                  border: "none",
-                  color: "rgba(255,255,255,0.7)",
+                  background: "rgba(255,255,255,0.12)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  color: "rgba(255,255,255,0.9)",
                   cursor: "pointer",
-                  padding: 4,
-                  borderRadius: 6,
+                  padding: "6px 8px",
+                  borderRadius: 7,
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "center",
+                  transition: "background 0.2s, color 0.2s",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = C.white)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = C.white;
+                  e.currentTarget.style.background = "rgba(255,255,255,0.22)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "rgba(255,255,255,0.9)";
+                  e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+                }}
               >
-                <Icon name="star" size={15} />
+                <Icon name="refresh" size={15} />
               </button>
 
               {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                aria-label={lang === "en" ? "Close chat" : "Fermer le chat"}
+                aria-label="Close chat"
                 style={{
                   background: "none",
                   border: "none",
@@ -602,9 +544,9 @@ export default function XaritooChat() {
             {messages.length === 1 && (
               <div style={{ display: "flex", flexDirection: "column", gap: 7, marginTop: 4 }}>
                 <span style={{ fontSize: 11.5, fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                  {lang === "en" ? "Quick questions:" : "Suggestions rapides :"}
+                  Quick questions:
                 </span>
-                {SUGGESTIONS[lang].map((item, idx) => (
+                {SUGGESTIONS.map((item, idx) => (
                   <button
                     key={idx}
                     type="button"
@@ -621,7 +563,7 @@ export default function XaritooChat() {
             {isLoading && (
               <div className="chat-msg-bubble chat-msg-bot" style={{ display: "flex", alignItems: "center", gap: 6, width: "fit-content" }}>
                 <span style={{ fontSize: 13, color: C.purplePrimary, fontWeight: 600 }}>
-                  {lang === "en" ? "Xaritoo is thinking" : "Xaritoo réfléchit"}
+                  Xaritoo is thinking
                 </span>
                 <span style={{ display: "inline-flex", gap: 3 }}>
                   <span style={{ width: 5, height: 5, borderRadius: "50%", background: C.purplePrimary, animation: "pulse 1s infinite 0s" }} />
@@ -655,7 +597,7 @@ export default function XaritooChat() {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder={lang === "en" ? "Ask any question about Xaritoo..." : "Posez une question sur Xaritoo..."}
+                placeholder="Ask any question about Xaritoo..."
                 disabled={isLoading}
                 maxLength={600}
                 style={{
@@ -675,7 +617,7 @@ export default function XaritooChat() {
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                aria-label={lang === "en" ? "Send message" : "Envoyer le message"}
+                aria-label="Send message"
                 style={{
                   background: input.trim() && !isLoading ? C.purplePrimary : "rgba(91,44,131,0.2)",
                   color: C.white,
@@ -695,11 +637,7 @@ export default function XaritooChat() {
               </button>
             </div>
             <div style={{ fontSize: 10.5, color: C.textMuted, textAlign: "center", letterSpacing: "0.02em" }}>
-              {lang === "en" ? (
-                <>Official Xaritoo AI Assistant • <em>No Seed Grows Alone</em></>
-              ) : (
-                <>Assistant IA officiel de Xaritoo • <em>Aucune graine ne grandit seule</em></>
-              )}
+              Official Xaritoo AI Assistant • <em>No Seed Grows Alone</em>
             </div>
           </form>
         </div>
