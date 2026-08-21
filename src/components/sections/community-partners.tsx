@@ -38,6 +38,8 @@ export default function CommunityPartners() {
             },
             {
               icon: 'tree',
+              image: '/images/partner-senpath.jpeg',
+              imageAlt: 'Sen Path Community logo — Empower. Connect. Rise.',
               name: 'Sen Path Community',
               detail: 'Founding Organization & Partner',
             },
