@@ -8,25 +8,46 @@ import Icon from "@/components/ui/icon";
 import { emailUrl, whatsappUrl } from "@/lib/contact-channels";
 
 function ClubJoinForm() {
-  const [data, setData] = useState({ name: '', email: '', grade: '', interest: '' })
+  const [data, setData] = useState({
+    parentName: '',
+    parentEmail: '',
+    parentPhone: '',
+    studentName: '',
+    studentGrade: '',
+    schoolName: '',
+    interest: '',
+    notes: '',
+  })
   const [sent, setSent] = useState(false)
   const [sendMethod, setSendMethod] = useState<'whatsapp' | 'email'>('whatsapp')
 
   const submitClubApplication = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const message = [
-      'Hello Xaritoo, I would like to join the Xaritoo Club.',
-      `Full name: ${data.name}`,
-      `Email: ${data.email}`,
-      `Current grade / school year: ${data.grade || 'Not provided'}`,
-      `Support requested: ${data.interest || 'General student support'}`,
-    ].join('\n')
+      'Hello Xaritoo, I am a parent/guardian requesting support for my child through the Xaritoo Club.',
+      '',
+      '--- PARENT / GUARDIAN ---',
+      `Parent / Guardian Name: ${data.parentName}`,
+      `Parent Email: ${data.parentEmail}`,
+      `Parent Phone: ${data.parentPhone || 'Not provided'}`,
+      '',
+      '--- STUDENT INFORMATION ---',
+      `Student's Full Name: ${data.studentName}`,
+      `Current Grade / School Year: ${data.studentGrade || 'Not provided'}`,
+      `School / District: ${data.schoolName || 'Not provided'}`,
+      '',
+      '--- SUPPORT REQUESTED ---',
+      `Primary Area: ${data.interest || 'General student support'}`,
+      data.notes ? `Specific Needs / Goals: ${data.notes}` : '',
+    ]
+      .filter(Boolean)
+      .join('\n')
 
     if (sendMethod === 'whatsapp') {
       window.open(whatsappUrl(message), '_blank', 'noopener,noreferrer')
     } else {
       window.open(
-        emailUrl(`Xaritoo Club application — ${data.name}`, message),
+        emailUrl(`Xaritoo Club Student Registration — ${data.studentName} (Parent: ${data.parentName})`, message),
         '_blank',
         'noopener,noreferrer',
       )
@@ -36,70 +57,275 @@ function ClubJoinForm() {
   }
 
   const fieldStyle = {
-    width: '100%', padding: '10px 14px', border: `1.5px solid rgba(91,44,131,0.2)`,
-    borderRadius: 8, fontSize: 15, fontFamily: 'var(--font-sans)', color: '#40364A',
-    background: '#fff', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' as const,
+    width: '100%',
+    padding: '10px 14px',
+    border: `1.5px solid rgba(91,44,131,0.2)`,
+    borderRadius: 8,
+    fontSize: 15,
+    fontFamily: 'var(--font-sans)',
+    color: '#40364A',
+    background: '#fff',
+    outline: 'none',
+    transition: 'border-color 0.2s',
+    boxSizing: 'border-box' as const,
   }
 
   return (
-    <div className="club-join-form" style={{ padding: '40px 40px', background: '#fff', minWidth: 0 }}>
+    <div className="club-join-form" style={{ padding: '36px 36px', background: '#fff', minWidth: 0 }}>
       {sent ? (
-        <div style={{ textAlign: 'center', paddingTop: 40 }}>
-          <Icon name="book" size={40} style={{ color: C.purplePrimary, margin: '0 auto 12px' }} />
-          <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 20, color: '#251C2D', marginBottom: 8 }}>Application received!</h4>
-          <p style={{ fontSize: 15, color: '#40364A' }}>We'll be in touch soon with next steps for joining Xaritoo Club.</p>
+        <div style={{ textAlign: 'center', paddingTop: 40, paddingBottom: 20 }}>
+          <Icon name="book" size={42} style={{ color: C.purplePrimary, margin: '0 auto 12px' }} />
+          <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 22, color: '#251C2D', marginBottom: 8 }}>
+            Registration Request Received!
+          </h4>
+          <p style={{ fontSize: 15, color: '#40364A', lineHeight: 1.6, maxWidth: 360, margin: '0 auto' }}>
+            Thank you! We will reach out to you (the parent/guardian) shortly to discuss how we can best support your student.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setSent(false)
+              setData({
+                parentName: '',
+                parentEmail: '',
+                parentPhone: '',
+                studentName: '',
+                studentGrade: '',
+                schoolName: '',
+                interest: '',
+                notes: '',
+              })
+            }}
+            style={{
+              marginTop: 20,
+              background: 'none',
+              border: `1px solid ${C.purplePrimary}`,
+              color: C.purplePrimary,
+              padding: '8px 16px',
+              borderRadius: 8,
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            Submit Another Registration
+          </button>
         </div>
       ) : (
         <>
-          <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 700, color: '#251C2D', marginBottom: 6 }}>
-            Join the Xaritoo Club
-          </h4>
-          <p style={{ fontSize: 14, color: '#746C7A', marginBottom: 20, lineHeight: 1.6 }}>
-            Ready to get academic support and be part of our school-year community? Fill out the form below and we'll reach out.
-          </p>
+          <div style={{ marginBottom: 18 }}>
+            <span
+              style={{
+                display: 'inline-block',
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: C.purplePrimary,
+                background: C.purpleLavender,
+                padding: '4px 10px',
+                borderRadius: 6,
+                marginBottom: 8,
+              }}
+            >
+              Parent &amp; Guardian Registration
+            </span>
+            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 700, color: '#251C2D', marginBottom: 6 }}>
+              Register Your Student for Xaritoo Club
+            </h4>
+            <p style={{ fontSize: 14, color: '#746C7A', lineHeight: 1.5, margin: 0 }}>
+              As a parent or guardian, please tell us about your child and their academic support needs. Our team will contact you to finalize placement.
+            </p>
+          </div>
+
           <form onSubmit={submitClubApplication} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {[
-              { id: 'name', label: 'Full Name', type: 'text', placeholder: 'Your name', required: true },
-              { id: 'email', label: 'Email Address', type: 'email', placeholder: 'your@email.com', required: true },
-              { id: 'grade', label: 'Current Grade / School Year', type: 'text', placeholder: 'e.g. 10th grade', required: false },
-            ].map((f) => (
-              <div key={f.id}>
-                <label htmlFor={`club-${f.id}`} style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#251C2D', marginBottom: 4 }}>
-                  {f.label}{f.required && <span style={{ color: '#5B2C83' }}> *</span>}
-                </label>
-                <input
-                  id={`club-${f.id}`} name={f.id} type={f.type} placeholder={f.placeholder} required={f.required}
-                  maxLength={f.id === 'email' ? 254 : 120}
-                  autoComplete={f.id === 'name' ? 'name' : f.id === 'email' ? 'email' : 'off'}
-                  value={data[f.id as keyof typeof data]}
-                  onChange={(e) => setData({ ...data, [f.id]: e.target.value })}
-                  style={fieldStyle}
-                  onFocus={(e) => (e.currentTarget.style.borderColor = '#5B2C83')}
-                  onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(91,44,131,0.2)')}
-                />
+            {/* Parent Section */}
+            <div style={{ borderBottom: '1px solid rgba(91,44,131,0.1)', paddingBottom: 12 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: C.purplePrimary, marginBottom: 10 }}>
+                1. Parent / Guardian Details
               </div>
-            ))}
-            <div>
-              <label htmlFor="club-interest" style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#251C2D', marginBottom: 4 }}>
-                What support are you looking for?
-              </label>
-              <select
-                id="club-interest"
-                name="interest"
-                value={data.interest}
-                onChange={(e) => setData({ ...data, interest: e.target.value })}
-                style={{ ...fieldStyle }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = '#5B2C83')}
-                onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(91,44,131,0.2)')}
-              >
-                <option value="">Select an area…</option>
-                {['Math', 'Science', 'Writing', 'SAT/ACT Preparation', 'Scholarships & College Planning', 'Career & Resume Support', 'General mentorship'].map((o) => (
-                  <option key={o} value={o}>{o}</option>
-                ))}
-              </select>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                <div style={{ gridColumn: '1 / -1' }}>
+                  <label htmlFor="club-parentName" style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#251C2D', marginBottom: 4 }}>
+                    Parent / Guardian Full Name <span style={{ color: '#5B2C83' }}>*</span>
+                  </label>
+                  <input
+                    id="club-parentName"
+                    name="parentName"
+                    type="text"
+                    placeholder="e.g. Aminata Diallo"
+                    required
+                    maxLength={120}
+                    autoComplete="name"
+                    value={data.parentName}
+                    onChange={(e) => setData({ ...data, parentName: e.target.value })}
+                    style={fieldStyle}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = '#5B2C83')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(91,44,131,0.2)')}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="club-parentEmail" style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#251C2D', marginBottom: 4 }}>
+                    Email Address <span style={{ color: '#5B2C83' }}>*</span>
+                  </label>
+                  <input
+                    id="club-parentEmail"
+                    name="parentEmail"
+                    type="email"
+                    placeholder="parent@email.com"
+                    required
+                    maxLength={254}
+                    autoComplete="email"
+                    value={data.parentEmail}
+                    onChange={(e) => setData({ ...data, parentEmail: e.target.value })}
+                    style={fieldStyle}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = '#5B2C83')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(91,44,131,0.2)')}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="club-parentPhone" style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#251C2D', marginBottom: 4 }}>
+                    Phone Number
+                  </label>
+                  <input
+                    id="club-parentPhone"
+                    name="parentPhone"
+                    type="tel"
+                    placeholder="(312) 555-0199"
+                    maxLength={30}
+                    autoComplete="tel"
+                    value={data.parentPhone}
+                    onChange={(e) => setData({ ...data, parentPhone: e.target.value })}
+                    style={fieldStyle}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = '#5B2C83')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(91,44,131,0.2)')}
+                  />
+                </div>
+              </div>
             </div>
+
+            {/* Student Section */}
+            <div style={{ borderBottom: '1px solid rgba(91,44,131,0.1)', paddingBottom: 12 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: C.purplePrimary, marginBottom: 10 }}>
+                2. Student Information
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                <div style={{ gridColumn: '1 / -1' }}>
+                  <label htmlFor="club-studentName" style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#251C2D', marginBottom: 4 }}>
+                    Student's Full Name (Child) <span style={{ color: '#5B2C83' }}>*</span>
+                  </label>
+                  <input
+                    id="club-studentName"
+                    name="studentName"
+                    type="text"
+                    placeholder="e.g. Ibrahim Diallo"
+                    required
+                    maxLength={120}
+                    value={data.studentName}
+                    onChange={(e) => setData({ ...data, studentName: e.target.value })}
+                    style={fieldStyle}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = '#5B2C83')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(91,44,131,0.2)')}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="club-studentGrade" style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#251C2D', marginBottom: 4 }}>
+                    Current Grade / Level <span style={{ color: '#5B2C83' }}>*</span>
+                  </label>
+                  <input
+                    id="club-studentGrade"
+                    name="studentGrade"
+                    type="text"
+                    placeholder="e.g. 10th Grade / Sophomore"
+                    required
+                    maxLength={60}
+                    value={data.studentGrade}
+                    onChange={(e) => setData({ ...data, studentGrade: e.target.value })}
+                    style={fieldStyle}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = '#5B2C83')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(91,44,131,0.2)')}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="club-schoolName" style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#251C2D', marginBottom: 4 }}>
+                    School Name
+                  </label>
+                  <input
+                    id="club-schoolName"
+                    name="schoolName"
+                    type="text"
+                    placeholder="e.g. Lincoln High School"
+                    maxLength={120}
+                    value={data.schoolName}
+                    onChange={(e) => setData({ ...data, schoolName: e.target.value })}
+                    style={fieldStyle}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = '#5B2C83')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(91,44,131,0.2)')}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Needs Section */}
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: C.purplePrimary, marginBottom: 10 }}>
+                3. Academic &amp; Mentorship Needs
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <div>
+                  <label htmlFor="club-interest" style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#251C2D', marginBottom: 4 }}>
+                    Primary Support Needed <span style={{ color: '#5B2C83' }}>*</span>
+                  </label>
+                  <select
+                    id="club-interest"
+                    name="interest"
+                    required
+                    value={data.interest}
+                    onChange={(e) => setData({ ...data, interest: e.target.value })}
+                    style={{ ...fieldStyle }}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = '#5B2C83')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(91,44,131,0.2)')}
+                  >
+                    <option value="">Select primary support area…</option>
+                    {[
+                      'Math Tutoring & Support',
+                      'Science (Biology, Chemistry, Physics)',
+                      'Writing, Reading & English',
+                      'SAT / ACT Test Preparation',
+                      'Scholarships & College Planning',
+                      'Career Guidance & Resume Building',
+                      'Comprehensive Academic Tutoring',
+                      'General Mentorship & Accountability',
+                      'Other / Multiple Areas',
+                    ].map((o) => (
+                      <option key={o} value={o}>
+                        {o}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="club-notes" style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#251C2D', marginBottom: 4 }}>
+                    Specific Goals or Challenges (Optional)
+                  </label>
+                  <input
+                    id="club-notes"
+                    name="notes"
+                    type="text"
+                    placeholder="e.g. Needs help in Geometry and college prep"
+                    maxLength={300}
+                    value={data.notes}
+                    onChange={(e) => setData({ ...data, notes: e.target.value })}
+                    style={fieldStyle}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = '#5B2C83')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(91,44,131,0.2)')}
+                  />
+                </div>
+              </div>
+            </div>
+
             <fieldset className="club-send-method">
-              <legend>Send your application by</legend>
+              <legend>Send registration request via</legend>
               <label className={sendMethod === 'whatsapp' ? 'club-send-option club-send-option--active' : 'club-send-option'}>
                 <input type="radio" name="club-send-method" value="whatsapp" checked={sendMethod === 'whatsapp'} onChange={() => setSendMethod('whatsapp')} />
                 <Icon name="message" size={19} />
@@ -111,13 +337,32 @@ function ClubJoinForm() {
                 <span>Email</span>
               </label>
             </fieldset>
+
             <button
               type="submit"
-              style={{ background: '#5B2C83', color: '#fff', border: 'none', fontSize: 15, fontWeight: 700, padding: '12px 24px', borderRadius: 10, cursor: 'pointer', fontFamily: 'var(--font-sans)', transition: 'background 0.2s, transform 0.2s', marginTop: 4 }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = '#4a2068'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = '#5B2C83'; e.currentTarget.style.transform = 'translateY(0)' }}
+              style={{
+                background: '#5B2C83',
+                color: '#fff',
+                border: 'none',
+                fontSize: 15,
+                fontWeight: 700,
+                padding: '13px 24px',
+                borderRadius: 10,
+                cursor: 'pointer',
+                fontFamily: 'var(--font-sans)',
+                transition: 'background 0.2s, transform 0.2s',
+                marginTop: 4,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#4a2068'
+                e.currentTarget.style.transform = 'translateY(-1px)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#5B2C83'
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
             >
-              Send with {sendMethod === 'whatsapp' ? 'WhatsApp' : 'Email'}
+              Send Request with {sendMethod === 'whatsapp' ? 'WhatsApp' : 'Email'}
             </button>
           </form>
         </>
@@ -248,7 +493,7 @@ export default function Programs() {
                 onMouseLeave={(e) => (e.currentTarget.style.gap = '6px')}
                 aria-expanded={clubOpen}
               >
-                {clubOpen ? 'Close ↑' : 'Learn more & Join →'}
+                {clubOpen ? 'Close ↑' : 'Learn more & Register Your Student →'}
               </button>
             </div>
           </article>

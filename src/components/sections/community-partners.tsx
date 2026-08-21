@@ -27,11 +27,20 @@ export default function CommunityPartners() {
           organizations and community leaders who have partnered with us to invest in young people.
         </p>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, justifyContent: 'center' }}>
           {[
-            { icon: 'handshake', image: '/images/partner-sac.jpeg', imageAlt: 'Senegalese Association of Chicago logo', name: 'Senegalese Association of Chicago', detail: 'SAC — Community Partner' },
-            { icon: 'graduation', image: '/images/partner-bpac-marquardt.jpeg', imageAlt: 'Marquardt School District 15 logo', name: 'BPAC Bilingual Parent Advisory Committee', detail: 'A program of Marquardt School District 15' },
-            { icon: 'star', image: '/images/partner-agents-of-hope.jpeg', imageAlt: 'Agents of Hope logo', name: 'Agents of Hope', detail: 'Community Partner' },
+            {
+              icon: 'handshake',
+              image: '/images/partner-sac.jpeg',
+              imageAlt: 'Senegalese Association of Chicago logo',
+              name: 'Senegalese Association of Chicago',
+              detail: 'SAC — Community Partner',
+            },
+            {
+              icon: 'tree',
+              name: 'Sen Path Community',
+              detail: 'Founding Organization & Partner',
+            },
           ].map((p) => (
             <div
               key={p.name}
@@ -54,8 +63,8 @@ export default function CommunityPartners() {
                   <Image src={p.image} alt={p.imageAlt} width={1024} height={1024} sizes="72px" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </div>
               ) : (
-                <div style={{ width: 44, height: 44, borderRadius: 10, background: C.greenGrowth, color: C.white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
-                  <Icon name={p.icon} size={21} />
+                <div style={{ width: 56, height: 56, borderRadius: 14, background: C.purplePrimary, color: C.white, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Icon name={p.icon} size={28} />
                 </div>
               )}
               <div style={{ textAlign: 'left' }}>
