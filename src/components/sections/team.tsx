@@ -27,6 +27,7 @@ export default function Team() {
       email: 'mamediaw@xaritoo.org',
       bio: "Leading Xaritoo's mission to empower young people through mentorship, culture, and connection as a program of Sen Path Community.",
       initials: 'MD',
+      image: '/images/team-mame-diaw.jpeg',
       color: C.purplePrimary,
     },
     {
@@ -35,6 +36,7 @@ export default function Team() {
       email: '',
       bio: "Coordinating Xaritoo's programs and ensuring every Seed, Gardener, and Garden has the support they need throughout each season.",
       initials: 'ED',
+      image: '/images/team-el-hadji-dioum.jpeg',
       color: C.greenGrowth,
     },
     {
@@ -43,6 +45,7 @@ export default function Team() {
       email: '',
       bio: "Ensuring the safety, well-being, and protection of all program participants across Xaritoo's mentorship and club activities.",
       initials: 'MN',
+      image: '/images/team-mahamadou-ndiaye.jpeg',
       color: C.goldPrimary,
     },
   ]
@@ -132,25 +135,50 @@ export default function Team() {
               onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(91,44,131,0.1)'; e.currentTarget.style.transform = 'translateY(-3px)' }}
               onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              <div
-                style={{
-                  width: 64,
-                  height: 64,
-                  borderRadius: 16,
-                  background: m.color,
-                  color: C.white,
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: 22,
-                  fontWeight: 700,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: 20,
-                  letterSpacing: '0.02em',
-                }}
-              >
-                {m.initials}
-              </div>
+              {m.image ? (
+                <div
+                  style={{
+                    width: 90,
+                    height: 90,
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                    border: `3px solid ${m.color}`,
+                    boxShadow: `0 8px 24px rgba(50,25,77,0.16)`,
+                    marginBottom: 20,
+                    background: C.purpleLavender,
+                    position: "relative",
+                  }}
+                >
+                  <Image
+                    src={m.image}
+                    alt={m.name}
+                    width={240}
+                    height={240}
+                    sizes="90px"
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }}
+                  />
+                </div>
+              ) : (
+                <div
+                  style={{
+                    width: 64,
+                    height: 64,
+                    borderRadius: 16,
+                    background: m.color,
+                    color: C.white,
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: 22,
+                    fontWeight: 700,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: 20,
+                    letterSpacing: '0.02em',
+                  }}
+                >
+                  {m.initials}
+                </div>
+              )}
               <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 700, color: C.textDark, marginBottom: 4 }}>
                 {m.name}
               </h3>
