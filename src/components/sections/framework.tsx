@@ -4,6 +4,7 @@ import SectionLabel from "@/components/ui/section-label";
 import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
 import Image from "next/image";
+import LivingEcosystem from "@/components/interactive/living-ecosystem";
 
 export default function Framework() {
   const cards = [
@@ -163,6 +164,9 @@ export default function Framework() {
             </div>
           ))}
         </div>
+
+        {/* Living Ecosystem Interactive Simulator */}
+        <LivingEcosystem />
       </div>
 
       <style>{`
