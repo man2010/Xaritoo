@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import ImmersiveEffects from "@/components/effects/immersive-effects";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import XaritooChat from "@/components/chat/xaritoo-chat";
 import { absoluteUrl, defaultDescription, defaultSocialImage, globalKeywords, siteName, siteUrl, socialProfiles } from "@/lib/seo";
 import "../index.css";
 
@@ -103,6 +104,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <Header />
         {children}
         <Footer />
+        <XaritooChat />
       </body>
     </html>
   );
