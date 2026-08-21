@@ -132,10 +132,11 @@ export default function LivingEcosystem() {
           transition: all 0.25s ease;
           display: flex;
           align-items: center;
-          gap: 10px;
-          flex: 1;
-          min-width: 140px;
+          gap: 8px;
+          flex: 1 1 calc(25% - 10px);
+          min-width: 130px;
           justifyContent: center;
+          box-sizing: border-box;
         }
         .ecosystem-tab-btn:hover {
           background: rgba(255, 255, 255, 0.12);
@@ -151,24 +152,26 @@ export default function LivingEcosystem() {
         }
         .ecosystem-grid {
           display: grid;
-          grid-template-columns: 1.1fr 1fr;
-          gap: 36px;
+          grid-template-columns: 1.05fr 1fr;
+          gap: 32px;
           align-items: center;
-          margin-top: 32px;
+          margin-top: 28px;
         }
         .stage-visual-container {
           background: linear-gradient(180deg, rgba(37, 28, 45, 0.75) 0%, rgba(50, 25, 77, 0.95) 100%);
           border: 1px solid rgba(255, 255, 255, 0.12);
           border-radius: 20px;
-          padding: 24px;
+          padding: 20px;
           display: flex;
           flex-direction: column;
           align-items: center;
           justifyContent: center;
           position: relative;
-          min-height: 380px;
+          min-height: 340px;
           overflow: hidden;
           box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.3);
+          box-sizing: border-box;
+          width: 100%;
         }
         @keyframes pulseGlow {
           0%, 100% { transform: scale(1); opacity: 0.85; }
@@ -183,29 +186,69 @@ export default function LivingEcosystem() {
           50% { transform: translateY(0px); opacity: 1; }
           100% { transform: translateY(8px); opacity: 0.2; }
         }
+        .ecosystem-actions-row {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-top: 4px;
+        }
+        .ecosystem-controls-group {
+          display: flex;
+          gap: 6px;
+          margin-left: auto;
+        }
         @media (max-width: 900px) {
           .ecosystem-grid {
             grid-template-columns: 1fr !important;
-            gap: 28px !important;
+            gap: 24px !important;
           }
           .living-ecosystem {
-            padding: 24px 18px !important;
+            padding: 24px 16px !important;
+            margin-top: 36px !important;
           }
         }
         @media (max-width: 600px) {
+          .living-ecosystem {
+            padding: 18px 12px !important;
+            border-radius: 18px !important;
+          }
           .ecosystem-tabs {
             grid-template-columns: repeat(2, 1fr) !important;
             display: grid !important;
             gap: 8px !important;
+            width: 100% !important;
           }
           .ecosystem-tab-btn {
-            font-size: 13px !important;
-            padding: 10px 12px !important;
-            min-height: 48px !important;
+            font-size: 12.5px !important;
+            padding: 10px 8px !important;
+            min-height: 46px !important;
+            min-width: 0 !important;
+            width: 100% !important;
+            flex: none !important;
           }
           .stage-visual-container {
-            min-height: 300px !important;
-            padding: 16px !important;
+            min-height: 250px !important;
+            padding: 12px !important;
+          }
+          .ecosystem-actions-row {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 10px !important;
+          }
+          .ecosystem-actions-row > a {
+            width: 100% !important;
+            justify-content: center !important;
+            box-sizing: border-box !important;
+          }
+          .ecosystem-controls-group {
+            margin-left: 0 !important;
+            width: 100% !important;
+            justify-content: space-between !important;
+          }
+          .ecosystem-controls-group > button:last-child {
+            flex: 1 !important;
+            justify-content: center !important;
           }
         }
       `}</style>
@@ -475,7 +518,7 @@ export default function LivingEcosystem() {
           </div>
 
           {/* Actions & Navigation row */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginTop: 4 }}>
+          <div className="ecosystem-actions-row">
             <a
               href={activeStage.ctaHref}
               target={activeStage.ctaExternal ? "_blank" : undefined}
@@ -500,7 +543,7 @@ export default function LivingEcosystem() {
             </a>
 
             {/* Previous / Next buttons */}
-            <div style={{ display: "flex", gap: 6, marginLeft: "auto" }}>
+            <div className="ecosystem-controls-group">
               <button
                 type="button"
                 onClick={() => {

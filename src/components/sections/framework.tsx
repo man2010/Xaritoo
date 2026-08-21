@@ -64,28 +64,31 @@ export default function Framework() {
         }}
       />
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative' }}>
-        <div style={{ textAlign: 'center', marginBottom: 56 }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', width: '100%', boxSizing: 'border-box' }}>
+        <div style={{ textAlign: 'center', marginBottom: 48, padding: '0 8px' }}>
           <SectionLabel dark>Our Model</SectionLabel>
           <h2
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(28px, 3.5vw, 44px)',
+              fontSize: 'clamp(24px, 4vw, 44px)',
               fontWeight: 700,
-              lineHeight: 1.15,
+              lineHeight: 1.2,
               color: C.white,
               letterSpacing: '-0.02em',
               marginBottom: 16,
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word',
             }}
           >
             The Seed–Gardener–Garden Framework
           </h2>
-          <p style={{ fontSize: 17, lineHeight: 1.65, color: 'rgba(255,255,255,0.7)', maxWidth: 600, margin: '0 auto' }}>
+          <p style={{ fontSize: 16, lineHeight: 1.65, color: 'rgba(255,255,255,0.7)', maxWidth: 600, margin: '0 auto', wordBreak: 'break-word' }}>
             A unique model connecting young people with mentors and community in a living ecosystem of growth.
           </p>
         </div>
 
         <div
+          className="framework-cards-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
@@ -99,9 +102,10 @@ export default function Framework() {
                 background: 'rgba(255,255,255,0.06)',
                 border: `1px solid rgba(255,255,255,0.12)`,
                 borderRadius: 20,
-                padding: '36px 28px',
+                padding: '32px 24px',
                 backdropFilter: 'blur(8px)',
                 transition: 'transform 0.2s, background 0.2s',
+                boxSizing: 'border-box',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-4px)'
@@ -113,8 +117,8 @@ export default function Framework() {
               }}
             >
               {c.image ? (
-                <div style={{ width: 160, height: 160, margin: '0 auto 24px', overflow: 'hidden', borderRadius: '50%', border: `3px solid ${c.accentColor}`, boxShadow: `0 12px 30px ${c.color}35` }}>
-                  <Image src={c.image} alt={c.imageAlt} width={1254} height={1254} sizes="160px" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ width: 140, height: 140, margin: '0 auto 24px', overflow: 'hidden', borderRadius: '50%', border: `3px solid ${c.accentColor}`, boxShadow: `0 12px 30px ${c.color}35` }}>
+                  <Image src={c.image} alt={c.imageAlt} width={1254} height={1254} sizes="140px" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               ) : (
                 <div
@@ -150,7 +154,7 @@ export default function Framework() {
               <h3
                 style={{
                   fontFamily: 'var(--font-serif)',
-                  fontSize: 28,
+                  fontSize: 26,
                   fontWeight: 700,
                   color: C.white,
                   marginBottom: 14,
@@ -158,7 +162,7 @@ export default function Framework() {
               >
                 {c.role}
               </h3>
-              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'rgba(255,255,255,0.7)' }}>
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'rgba(255,255,255,0.7)', margin: 0 }}>
                 {c.text}
               </p>
             </div>
@@ -171,7 +175,13 @@ export default function Framework() {
 
       <style>{`
         @media (max-width: 900px) {
-          #framework > div > div:last-child { grid-template-columns: 1fr !important; }
+          #framework {
+            padding: 64px 16px !important;
+          }
+          .framework-cards-grid {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
         }
       `}</style>
     </section>
