@@ -1,6 +1,6 @@
 "use client";
 
-import { colors as C, unsplashImage as img } from "@/lib/design-tokens";
+import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
 import { MENTEE_APPLICATION_URL, MENTOR_APPLICATION_URL } from "@/lib/application-links";
 
@@ -22,7 +22,7 @@ export default function Hero() {
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: `url(${img('1517486808906-6ca8b3f04846', 1600, 1000)})`,
+          backgroundImage: "url('/images/Hero.jpeg')",
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
           opacity: 0.22,

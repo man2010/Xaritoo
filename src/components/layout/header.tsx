@@ -29,12 +29,11 @@ export default function Nav() {
   }, [open])
 
   const links = [
-    { label: 'About', href: '/about' },
-    { label: 'Programs', href: '/programs' },
-    { label: 'Framework', href: '/framework' },
-    { label: 'Impact', href: '/impact' },
-    { label: 'Get Involved', href: '/get-involved' },
-    { label: 'Contact', href: '/contact' },
+    { label: 'About', href: '#about' },
+    { label: 'Programs', href: '#programs' },
+    { label: 'News', href: '/news-gallery' },
+    { label: 'Get Involved', href: '#join-as' },
+    { label: 'Contact', href: '#contact' },
   ]
 
   return (
@@ -87,8 +86,15 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
+              onClick={(e) => {
+                // Handle anchor links from different pages
+                if (l.href.startsWith('#') && pathname !== '/') {
+                  e.preventDefault()
+                  window.location.href = `/${l.href}`
+                }
+              }}
               style={{
-                color: pathname === l.href ? C.goldLight : 'rgba(255,255,255,0.82)',
+                color: l.href === '/news-gallery' && pathname === '/news-gallery' ? C.goldLight : 'rgba(255,255,255,0.82)',
                 textDecoration: 'none',
                 fontSize: 15,
                 fontWeight: 500,
@@ -97,8 +103,8 @@ export default function Nav() {
                 transition: 'color 0.2s',
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = C.goldLight)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = pathname === l.href ? C.goldLight : 'rgba(255,255,255,0.82)')}
-              aria-current={pathname === l.href ? 'page' : undefined}
+              onMouseLeave={(e) => (e.currentTarget.style.color = l.href === '/news-gallery' && pathname === '/news-gallery' ? C.goldLight : 'rgba(255,255,255,0.82)')}
+              aria-current={l.href === '/news-gallery' && pathname === '/news-gallery' ? 'page' : undefined}
             >
               {l.label}
             </a>
@@ -202,11 +208,17 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              onClick={() => setOpen(false)}
-              aria-current={pathname === l.href ? 'page' : undefined}
+              onClick={(e) => {
+                setOpen(false)
+                // Handle anchor links from different pages
+                if (l.href.startsWith('#') && pathname !== '/') {
+                  e.preventDefault()
+                  window.location.href = `/${l.href}`
+                }
+              }}
               style={{
                 display: 'block',
-                color: 'rgba(255,255,255,0.88)',
+                color: l.href === '/news-gallery' && pathname === '/news-gallery' ? C.goldLight : 'rgba(255,255,255,0.88)',
                 textDecoration: 'none',
                 fontSize: 16,
                 fontWeight: 500,

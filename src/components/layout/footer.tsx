@@ -65,7 +65,9 @@ export default function Footer() {
               { label: 'Home', href: '/' },
               { label: 'About', href: '/about' },
               { label: 'Our Programs', href: '/programs' },
+              { label: 'Our Framework', href: '/framework' },
               { label: 'Our Impact', href: '/impact' },
+              { label: 'News', href: '/news-gallery' },
               { label: 'Get Involved', href: '/get-involved' },
               { label: 'Contact', href: '/contact' },
             ].map(
