@@ -18,7 +18,7 @@ export default function About() {
           alignItems: 'center',
         }}
       >
-        {/* Image */}
+        {/* Video */}
         <div style={{ position: 'relative' }}>
           <div
             style={{
@@ -31,21 +31,33 @@ export default function About() {
               borderRadius: 20,
             }}
           />
-          <Image
-            src="/images/xaritoo-who-we-are.jpeg"
-            alt="Three Xaritoo participants together at an outdoor community event"
-            width={1365}
-            height={2048}
-            sizes="(max-width: 900px) 100vw, 50vw"
+
+          <div
             style={{
               position: 'relative',
-              width: '100%',
-              height: 'auto',
-              objectFit: 'contain',
+              overflow: 'hidden',
               borderRadius: 16,
-              display: 'block',
+              boxShadow: '0 24px 60px rgba(91, 44, 131, 0.18)',
             }}
-          />
+          >
+            <video
+              src="https://pub-ca5a60ca01484c16bede7ba44924da59.r2.dev/who-we-are.mp4"
+              poster="/images/xaritoo-who-we-are.jpeg"
+              controls
+              playsInline
+              preload="metadata"
+              aria-label="CEO introduction video about Xaritoo"
+              style={{
+                display: 'block',
+                width: '100%',
+                height: 'auto',
+                aspectRatio: '4 / 5',
+                objectFit: 'cover',
+                background: '#0f0820',
+              }}
+            />
+          </div>
+
           <div
             style={{
               position: 'absolute',
