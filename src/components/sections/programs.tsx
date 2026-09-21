@@ -291,6 +291,7 @@ function ClubJoinForm() {
                       'Math Tutoring & Support',
                       'Science (Biology, Chemistry, Physics)',
                       'Writing, Reading & English',
+                      'Counseling',
                       'SAT / ACT Test Preparation',
                       'Scholarships & College Planning',
                       'Career Guidance & Resume Building',

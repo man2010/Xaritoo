@@ -38,11 +38,11 @@ export const metadata: Metadata = {
   formatDetection: { email: false, address: false, telephone: false },
   icons: {
     icon: [
-      { url: "/favicon-48.png", type: "image/png", sizes: "48x48" },
-      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/images/xaritoo-logo.jpeg", type: "image/jpeg", sizes: "48x48" },
+      { url: "/images/xaritoo-logo.jpeg", type: "image/jpeg", sizes: "512x512" },
     ],
-    shortcut: [{ url: "/favicon-48.png", type: "image/png", sizes: "48x48" }],
-    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+    shortcut: [{ url: "/images/xaritoo-logo.jpeg", type: "image/jpeg", sizes: "48x48" }],
+    apple: [{ url: "/images/xaritoo-logo.jpeg", type: "image/jpeg", sizes: "180x180" }],
   },
   alternates: { canonical: "/" },
   openGraph: {

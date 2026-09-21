@@ -34,7 +34,7 @@ const routes: Record<string, RouteConfig> = {
     icon: "seed",
     seoTitle: "About Xaritoo Youth Mentorship",
     keywords: ["about Xaritoo", "youth mentorship organization", "Sen Path Community"],
-    image: "/images/xaritoo-who-we-are.jpeg",
+    image: "/images/xaritoo-logo.jpeg",
     components: [About, Pillars, Team],
   },
   programs: {
@@ -44,7 +44,7 @@ const routes: Record<string, RouteConfig> = {
     icon: "book",
     seoTitle: "Youth Mentorship & Student Support Programs",
     keywords: ["youth mentorship programs", "student academic support", "summer mentorship program"],
-    image: "/images/xaritoo-summer-program.jpeg",
+    image: "/images/xaritoo-logo.jpeg",
     components: [Programs, CommunityPartners],
   },
   framework: {
@@ -54,7 +54,7 @@ const routes: Record<string, RouteConfig> = {
     icon: "tree",
     seoTitle: "Our Seed–Gardener–Garden Mentorship Model",
     keywords: ["mentorship model", "mentor mentee framework", "community-supported mentoring"],
-    image: "/images/xaritoo-mentor-model.jpeg",
+    image: "/images/xaritoo-logo.jpeg",
     components: [Framework],
   },
   impact: {
@@ -64,7 +64,7 @@ const routes: Record<string, RouteConfig> = {
     icon: "users",
     seoTitle: "Xaritoo Youth Mentorship Impact",
     keywords: ["youth mentorship impact", "youth confidence and leadership", "community program outcomes"],
-    image: "/images/xaritoo-impact.jpeg",
+    image: "/images/xaritoo-logo.jpeg",
     components: [Impact, Testimonials],
   },
   "get-involved": {
@@ -74,7 +74,7 @@ const routes: Record<string, RouteConfig> = {
     icon: "handshake",
     seoTitle: "Become a Mentor or Mentee",
     keywords: ["become a youth mentor", "become a mentee", "volunteer youth program", "partner with Xaritoo"],
-    image: "/images/xaritoo-mentors.jpeg",
+    image: "/images/xaritoo-logo.jpeg",
     components: [CtaBand],
   },
   contact: {
@@ -84,7 +84,7 @@ const routes: Record<string, RouteConfig> = {
     icon: "mail",
     seoTitle: "Contact the Xaritoo Team",
     keywords: ["contact Xaritoo", "youth mentorship inquiry", "Xaritoo Chicago"],
-    image: "/images/xaritoo-culture.jpeg",
+    image: "/images/xaritoo-logo.jpeg",
     components: [Contact],
   },
 };

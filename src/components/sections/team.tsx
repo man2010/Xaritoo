@@ -40,12 +40,12 @@ export default function Team() {
       color: C.greenGrowth,
     },
     {
-      name: 'Mahamadou Ndiaye',
+      name: 'Sokhna Fall',
       role: 'Safety & Safeguarding Supervisor',
       email: '',
       bio: "Ensuring the safety, well-being, and protection of all program participants across Xaritoo's mentorship and club activities.",
-      initials: 'MN',
-      image: '/images/team-mahamadou-ndiaye.jpeg',
+      initials: 'SF',
+      image: '/images/team-sokhna-fall.jpeg',
       color: C.goldPrimary,
     },
   ]

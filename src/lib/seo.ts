@@ -4,7 +4,7 @@ export const siteUrl = configuredUrl.replace(/\/$/, "");
 export const siteName = "Xaritoo";
 export const defaultDescription =
   "Xaritoo is a youth development program of Sen Path Community helping young people grow through mentorship, culture, education, leadership, and community connection.";
-export const defaultSocialImage = "/images/xaritoo-summer-program.jpeg";
+export const defaultSocialImage = "/images/xaritoo-logo.jpeg";
 
 export const socialProfiles = [
   "https://www.instagram.com/xaritoomentorship/",
