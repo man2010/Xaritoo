@@ -1,6 +1,6 @@
 export const socialLinks = {
   generalEmail: "mailto:senpathcommunity@gmail.com",
-  directorEmail: "mailto:mamediaw@xaritoo.org",
+  directorEmail: "mailto:Xaritoomentorship@gmail.com",
   website: "https://xaritoo.org",
   instagram: "https://www.instagram.com/xaritoomentorship/",
   facebook: "https://www.facebook.com/XaritooMentorship",

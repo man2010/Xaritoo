@@ -24,7 +24,7 @@ export default function Team() {
     {
       name: 'Mame Diaw',
       role: 'Executive Director',
-      email: 'mamediaw@xaritoo.org',
+      email: 'Xaritoomentorship@gmail.com',
       bio: "Leading Xaritoo's mission to empower young people through mentorship, culture, and connection as a program of Sen Path Community.",
       initials: 'MD',
       image: '/images/team-mame-diaw.jpeg',

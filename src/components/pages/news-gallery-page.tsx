@@ -175,6 +175,201 @@ const newsItems: NewsItem[] = [
       tagline: "Mentorship. Culture. Connection. No Seed Grows Alone.",
     },
   },
+  {
+    id: "impact-stories-2026",
+    title: "Impact Stories: Growth You Can See, Voices You Can Hear",
+    excerpt:
+      "From new friendships to family connection, creativity, trust, and quiet confidence — real stories from Xaritoo's inaugural 2026 mentorship summer.",
+    date: "September 2026",
+    category: "impact-story",
+    image: "/images/xaritoo-summer-program.jpeg",
+    intro: [
+      "Xaritoo began with a simple belief: young people grow stronger when they have people around them who listen, guide, encourage, and create opportunities for them to belong.",
+      "During our inaugural Xaritoo Mentorship summer in 2026, Seeds, Gardeners, Gardens, and families came together through mentorship, creativity, sports, culture, conversation, and shared experiences. These are not just program highlights — these are stories of connection, confidence, belonging, and growth.",
+    ],
+    sections: [
+      {
+        heading: "\"I Met People I Wouldn't Have Met Before.\"",
+        paragraphs: [
+          "One of the earliest ideas behind Xaritoo was simple: help young people build friendships and relationships beyond the circles they already knew. During the first Xaritoo Mentorship summer, that idea became real.",
+          "Young people arrived with different personalities, interests, career dreams, schools, and experiences — some drawn to medicine and nursing, others to engineering, technology, business, entrepreneurship, teaching, veterinary medicine, fashion, and finance. Their Gardeners brought experience from fields including public health, chemistry, criminal justice, business, and social work.",
+          "\"Met new people.\" \"It allowed me to make connections with people.\" \"To talk to more people.\" Those answers may be short, but they represent something important: sometimes growth begins simply because a young person discovers there are people here they can talk to.",
+        ],
+        mediaBlocks: [
+          {
+            label: "New Connections",
+            assets: [
+              photo("/images/mentor-gallery-01.jpeg", "Xaritoo participants building new connections"),
+              photo("/images/mentor-gallery-03.jpeg", "Xaritoo mentors and mentees together during a program activity"),
+            ],
+          },
+        ],
+      },
+      {
+        heading: "\"I Wanted My Children to Feel Connected.\" — A Parent's Perspective",
+        paragraphs: [
+          "For one parent, Xaritoo answered a hope she already had for her children. She wanted them to meet other young people their age, develop friendships, and have positive people around them.",
+          "\"The Xaritoo mentorship program had a big impact on my family. I've always wanted my children to connect with other children their age, build friendships, and have positive role models. The program gave them an opportunity to grow, learn, and feel connected to a supportive community. It has been a wonderful experience for my family.\"",
+          "That story matters because youth development doesn't happen in isolation. When a young person finds connection, the impact can reach beyond the individual Seed — it can reach the family.",
+        ],
+        mediaBlocks: [
+          {
+            label: "Family Connection",
+            assets: [photo("/images/xaritoo-mentor-mentee.jpeg", "A Xaritoo mentor and mentee celebrating their connection")],
+          },
+        ],
+      },
+      {
+        heading: "A Shirt Became More Than a Shirt",
+        paragraphs: [
+          "Some of Xaritoo's most memorable moments weren't lectures. They happened around tables, as participants personalized Xaritoo shirts, aprons, and sports bags themselves — with creativity, conversation, and laughter.",
+          "They weren't simply receiving something with a Xaritoo logo. They were making it their own. Belonging grows when young people are invited to participate, contribute, create, and see themselves as part of what is being built.",
+        ],
+        mediaBlocks: [
+          {
+            label: "Creating Together",
+            assets: [photo("/images/xaritoo-culture.jpeg", "Xaritoo participants creating and celebrating together")],
+          },
+        ],
+      },
+      {
+        heading: "Sometimes Mentorship Looks Like a Cooking Challenge",
+        paragraphs: [
+          "During Xaritoo's summer activities, Seeds, Gardeners, and Gardens participated in cooking challenges, sports, games, outdoor activities, and community celebrations. Those moments weren't separate from mentorship — they were part of it.",
+          "Young people don't build trust simply because adults tell them to. Trust develops through time, consistency, conversation, laughter, shared challenges, and experiences.",
+          "\"I had fun playing sports.\" \"Positive experience for me and good interactions with the community.\" The activity may be what brought everyone together. The relationship is what we hope stays afterward.",
+        ],
+        mediaBlocks: [
+          {
+            label: "Trust & Teamwork",
+            assets: [photo("/images/mentor-gallery-05.jpeg", "A Xaritoo mentor supporting three mentees")],
+          },
+        ],
+      },
+      {
+        heading: "\"Empowerment and Leadership.\"",
+        paragraphs: [
+          "When participants were asked what impact Xaritoo had on them, one response contained only three words: \"Empowerment and leadership.\"",
+          "Throughout the summer, young people had opportunities to communicate with peers, interact with mentors, participate in group activities, explore interests, make decisions, and contribute their ideas.",
+          "Growth doesn't always look dramatic. Sometimes confidence grows quietly — in a new friendship, a question asked of a mentor, or a career considered for the first time.",
+        ],
+        mediaBlocks: [
+          {
+            label: "Confidence & Leadership",
+            assets: [photo("/images/mentor-gallery-06.jpeg", "Xaritoo mentors and mentees celebrating together")],
+          },
+        ],
+      },
+      {
+        heading: "31 Seeds. 15 Gardeners. 7 Gardens. One Community.",
+        paragraphs: [
+          "It started much smaller than this. In 2024, Sen Path Community began with conversations around a library table. The questions were about young people's real lives: friendship, confidence, school, careers, jobs, connection, and their future.",
+          "Two years later, Xaritoo's inaugural mentorship pilot brought together 31 Seeds, 15 Gardeners, 7 Gardens, and 53 total participants. They talked. They created. They cooked. They competed. They played. They learned. They connected — and they gave us feedback about what Xaritoo should become next.",
+          "A seed planted around one library table had begun growing into a community.",
+        ],
+        mediaBlocks: [
+          {
+            label: "Our Journey",
+            assets: [photo("/images/xaritoo-mentors.jpeg", "A group of Xaritoo mentors together")],
+          },
+        ],
+      },
+      {
+        heading: "They Told Us What They Want Next",
+        paragraphs: [
+          "Xaritoo's first summer was a pilot for a reason. It gave us an opportunity to test ideas, build relationships, listen to participants, and learn what young people want from the Xaritoo experience.",
+          "Participants asked for more activities, more sports, more outings and field trips, stronger cultural programming, better planning and communication, and greater consistency in mentor participation.",
+          "We asked. They answered. Now we grow. That's what youth-centered programming should look like: not simply creating something for young people, but continuing to build it with them.",
+        ],
+        mediaBlocks: [],
+      },
+    ],
+    closing: {
+      paragraphs: [
+        "Xaritoo's story is still beginning. Our first summer showed us what can happen when young people, mentors, families, and community members come together with one purpose: helping young people grow.",
+        "There is more to learn. More relationships to build. More young people to listen to. And more stories waiting to be written.",
+      ],
+      tagline: "No Seed Grows Alone.",
+    },
+  },
+  {
+    id: "collaboration-sac-2026",
+    title: "Growing Through Collaboration: Xaritoo & the Senegalese Association of Chicago",
+    excerpt:
+      "How a partnership with the Senegalese Association of Chicago helped bring the inaugural Xaritoo Mentorship program to life in summer 2026.",
+    date: "September 2026",
+    category: "partnership",
+    image: "/images/partner-sac.jpeg",
+    intro: [
+      "Every meaningful community initiative begins with a vision. Bringing that vision to life takes people and organizations who are willing to come together around a shared purpose.",
+    ],
+    sections: [
+      {
+        heading: "A Shared Purpose",
+        paragraphs: [
+          "For Sen Path Community, that vision is to help young people build friendships, receive mentorship, explore their interests, and develop the confidence to pursue their goals. In summer 2026, collaboration with the Senegalese Association of Chicago (SAC) became part of that journey as we launched the inaugural Xaritoo Mentorship program.",
+          "Through this collaboration, Xaritoo connected its youth development mission with SAC's established community network serving Senegalese families in the Chicago area. Together, these connections created opportunities for young people to take part in experiences that encouraged friendship, cultural connection, and meaningful relationships.",
+          "These shared experiences reflect an important part of Xaritoo's mission: helping young people form lasting connections while strengthening their sense of belonging within their communities.",
+        ],
+        mediaBlocks: [
+          {
+            label: "Community Partnership",
+            assets: [
+              photo("/images/partner-sac.jpeg", "Senegalese Association of Chicago logo"),
+              photo("/images/xaritoo-culture.jpeg", "A Xaritoo cultural activity featuring art, food, and community traditions"),
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Building on What Works",
+        paragraphs: [
+          "As Sen Path Community continues to develop Xaritoo's mentorship and school-year support programs, we recognize the value of community relationships in opening doors for young people. Our experience with SAC is one example of how collaboration can bring people together around youth development.",
+          "When young people, families, mentors, and community organizations come together, they create more opportunities for connection, learning, and growth.",
+        ],
+        mediaBlocks: [],
+      },
+    ],
+    closing: {
+      paragraphs: [],
+      tagline: "No Seed Grows Alone.",
+    },
+  },
+  {
+    id: "help-us-grow-2026",
+    title: "Help Us Grow the Next Generation",
+    excerpt:
+      "Xaritoo welcomes schools, libraries, businesses, and individuals who share our commitment to youth development to collaborate with us.",
+    date: "September 2026",
+    category: "community",
+    image: "/images/xaritoo-mentors.jpeg",
+    intro: [
+      "At Xaritoo, we believe that every young person deserves access to mentorship, guidance, meaningful relationships, and opportunities to explore their potential.",
+    ],
+    sections: [
+      {
+        heading: "Ways to Collaborate",
+        paragraphs: [
+          "We welcome opportunities to collaborate with schools, libraries, community organizations, businesses, educational institutions, and individuals who share our commitment to youth development.",
+          "Through community collaboration, we can create more opportunities for young people to learn, build confidence, strengthen their cultural identity, explore educational and career pathways, and connect with positive role models.",
+          "Whether through mentorship, educational resources, program activities, volunteer engagement, or financial and in-kind support, your contribution can help us build a stronger community around our youth.",
+        ],
+        mediaBlocks: [
+          {
+            label: "Get Involved",
+            assets: [photo("/images/xaritoo-mentors.jpeg", "A group of Xaritoo mentors together")],
+          },
+        ],
+      },
+    ],
+    closing: {
+      paragraphs: [
+        "Together, we can create an environment where every Seed has the support it needs to grow.",
+        "Interested in collaborating? We would love to explore how your organization can support Xaritoo's mission. Contact us at senpathcommunity@gmail.com.",
+      ],
+      tagline: "No Seed Grows Alone.",
+    },
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────

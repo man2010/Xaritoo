@@ -1,4 +1,4 @@
-export const CONTACT_EMAIL = "mamediaw@xaritoo.org";
+export const CONTACT_EMAIL = "Xaritoomentorship@gmail.com";
 export const WHATSAPP_NUMBER = "13128043857";
 
 export const whatsappUrl = (message: string) =>

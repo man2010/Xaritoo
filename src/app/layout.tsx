@@ -79,7 +79,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     logo: absoluteUrl("/images/xaritoo-logo.jpeg"),
     image: absoluteUrl(defaultSocialImage),
     description: defaultDescription,
-    email: "mamediaw@xaritoo.org",
+    email: "Xaritoomentorship@gmail.com",
     telephone: "+1-312-804-3857",
     sameAs: socialProfiles,
     parentOrganization: { "@type": "Organization", name: "Sen Path Community" },

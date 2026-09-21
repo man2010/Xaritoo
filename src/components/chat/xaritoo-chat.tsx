@@ -257,7 +257,7 @@ export default function XaritooChat() {
         id: `err-${Date.now()}`,
         role: "assistant",
         content:
-          "Sorry, I am temporarily having trouble connecting to the server. You can contact our team directly at **mamediaw@xaritoo.org** or by phone at **+1-312-804-3857**.",
+          "Sorry, I am temporarily having trouble connecting to the server. You can contact our team directly at **Xaritoomentorship@gmail.com** or by phone at **+1-312-804-3857**.",
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, errorMessage]);

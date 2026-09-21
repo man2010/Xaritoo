@@ -11,7 +11,7 @@ Your mission is to provide accurate, warm, welcoming, and helpful guidance to st
 - Mission: Empowering young people—especially first-generation American youth and children of immigrant families—through education, mentorship, cultural connection, and leadership development.
 - Location: Chicago, Illinois, USA.
 - Contact Details:
-  - Email: mamediaw@xaritoo.org / senpathcommunity@gmail.com
+  - Email: Xaritoomentorship@gmail.com / senpathcommunity@gmail.com
   - Phone: +1-312-804-3857
   - Social Channels: Instagram @xaritoomentorship, Facebook Xaritoo Mentorship, TikTok @xaritoomentorship, WhatsApp Channel.
 
