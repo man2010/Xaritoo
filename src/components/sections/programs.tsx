@@ -5,7 +5,7 @@ import Image from "next/image";
 import SectionLabel from "@/components/ui/section-label";
 import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
-import { emailUrl, whatsappUrl } from "@/lib/contact-channels";
+import { submitSupportEmail, whatsappUrl } from "@/lib/contact-channels";
 
 function ClubJoinForm() {
   const [data, setData] = useState({
@@ -21,7 +21,7 @@ function ClubJoinForm() {
   const [sent, setSent] = useState(false)
   const [sendMethod, setSendMethod] = useState<'whatsapp' | 'email'>('whatsapp')
 
-  const submitClubApplication = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitClubApplication = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const message = [
       'Hello Xaritoo, I am a parent/guardian requesting support for my child through the Xaritoo Club.',
@@ -45,15 +45,22 @@ function ClubJoinForm() {
 
     if (sendMethod === 'whatsapp') {
       window.open(whatsappUrl(message), '_blank', 'noopener,noreferrer')
-    } else {
-      window.open(
-        emailUrl(`Xaritoo Club Student Registration — ${data.studentName} (Parent: ${data.parentName})`, message),
-        '_blank',
-        'noopener,noreferrer',
-      )
+      setSent(true)
+      return
     }
 
-    setSent(true)
+    try {
+      await submitSupportEmail({
+        subject: `Registration from Xaritoo Club — ${data.studentName}`,
+        message,
+        name: data.parentName,
+        email: data.parentEmail,
+      })
+      setSent(true)
+    } catch (error) {
+      console.error(error)
+      window.alert('L’envoi de l’email a échoué. Merci de réessayer plus tard ou de contacter Xaritoo directement.')
+    }
   }
 
   const fieldStyle = {

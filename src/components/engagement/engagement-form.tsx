@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Icon from "@/components/ui/icon";
-import { emailUrl, whatsappUrl } from "@/lib/contact-channels";
+import { submitSupportEmail, whatsappUrl } from "@/lib/contact-channels";
 
 const opportunities = {
   volunteer: { label: "Volunteer", icon: "users", question: "Which skills or type of support would you like to offer?" },
@@ -24,7 +24,7 @@ export default function EngagementForm() {
 
   const update = (field: keyof typeof form, value: string) => setForm((current) => ({ ...current, [field]: value }));
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const opportunity = opportunities[role];
     const text = [
@@ -39,8 +39,20 @@ export default function EngagementForm() {
 
     if (method === "whatsapp") {
       window.open(whatsappUrl(text), "_blank", "noopener,noreferrer");
-    } else {
-      window.location.href = emailUrl(`${opportunity.label} inquiry — ${form.name}`, text);
+      return;
+    }
+
+    try {
+      await submitSupportEmail({
+        subject: `New ${opportunity.label} request from Xaritoo — ${form.name}`,
+        message: text,
+        name: form.name,
+        email: form.email,
+      });
+      window.alert("Votre demande a bien été reçue. L’équipe Xaritoo la traite actuellement et vous répondra bientôt.");
+    } catch (error) {
+      console.error(error);
+      window.alert("L’envoi de l’email a échoué. Merci de réessayer plus tard ou de contacter Xaritoo directement.");
     }
   };
 

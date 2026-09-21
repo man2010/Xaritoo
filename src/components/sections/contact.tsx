@@ -4,14 +4,14 @@ import { useState } from "react";
 import SectionLabel from "@/components/ui/section-label";
 import { colors as C } from "@/lib/design-tokens";
 import Icon from "@/components/ui/icon";
-import { emailUrl } from "@/lib/contact-channels";
+import { submitSupportEmail } from "@/lib/contact-channels";
 import { socialLinks } from "@/lib/social-links";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const message = [
       `Name: ${formData.name}`,
@@ -20,8 +20,19 @@ export default function Contact() {
       '',
       formData.message,
     ].join('\n')
-    window.location.href = emailUrl(formData.subject || `Xaritoo website inquiry — ${formData.name}`, message)
-    setSubmitted(true)
+
+    try {
+      await submitSupportEmail({
+        subject: formData.subject || `New message from Xaritoo — ${formData.name}`,
+        message,
+        name: formData.name,
+        email: formData.email,
+      })
+      setSubmitted(true)
+    } catch (error) {
+      console.error(error)
+      window.alert('L’envoi de l’email a échoué. Merci de réessayer plus tard ou de contacter Xaritoo directement.')
+    }
   }
 
   const fieldStyle = {
