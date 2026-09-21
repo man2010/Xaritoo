@@ -342,7 +342,7 @@ const newsItems: NewsItem[] = [
       "Xaritoo welcomes schools, libraries, businesses, and individuals who share our commitment to youth development to collaborate with us.",
     date: "September 2026",
     category: "partnership",
-    image: "/images/xaritoo-mentors.jpeg",
+    image: "/images/partnership.jpeg",
     intro: [
       "At Xaritoo, we believe that every young person deserves access to mentorship, guidance, meaningful relationships, and opportunities to explore their potential.",
     ],
