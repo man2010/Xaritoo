@@ -182,7 +182,7 @@ const newsItems: NewsItem[] = [
       "From new friendships to family connection, creativity, trust, and quiet confidence — real stories from Xaritoo's inaugural 2026 mentorship summer.",
     date: "September 2026",
     category: "impact-story",
-    image: "/images/xaritoo-summer-program.jpeg",
+    image: "/images/impact stories.jpeg",
     intro: [
       "Xaritoo began with a simple belief: young people grow stronger when they have people around them who listen, guide, encourage, and create opportunities for them to belong.",
       "During our inaugural Xaritoo Mentorship summer in 2026, Seeds, Gardeners, Gardens, and families came together through mentorship, creativity, sports, culture, conversation, and shared experiences. These are not just program highlights — these are stories of connection, confidence, belonging, and growth.",
@@ -298,7 +298,7 @@ const newsItems: NewsItem[] = [
     excerpt:
       "How a partnership with the Senegalese Association of Chicago helped bring the inaugural Xaritoo Mentorship program to life in summer 2026.",
     date: "September 2026",
-    category: "partnership",
+    category: "community",
     image: "/images/partner-sac.jpeg",
     intro: [
       "Every meaningful community initiative begins with a vision. Bringing that vision to life takes people and organizations who are willing to come together around a shared purpose.",
@@ -341,7 +341,7 @@ const newsItems: NewsItem[] = [
     excerpt:
       "Xaritoo welcomes schools, libraries, businesses, and individuals who share our commitment to youth development to collaborate with us.",
     date: "September 2026",
-    category: "community",
+    category: "partnership",
     image: "/images/xaritoo-mentors.jpeg",
     intro: [
       "At Xaritoo, we believe that every young person deserves access to mentorship, guidance, meaningful relationships, and opportunities to explore their potential.",
