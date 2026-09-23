@@ -6,5 +6,5 @@ export const socialLinks = {
   facebook: "https://www.facebook.com/XaritooMentorship",
   tiktok: "https://www.tiktok.com/@xaritoomentorship",
   youtube: "https://www.youtube.com/@XaritooMentorship",
-  whatsapp: "https://wa.me/13128043857",
+  whatsapp: "https://wa.me/16306001332",
 } as const;
