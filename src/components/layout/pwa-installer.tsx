@@ -7,47 +7,72 @@ type InstallPromptEvent = Event & {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 };
 
+let deferredInstallPrompt: InstallPromptEvent | null = null;
+
+if (typeof window !== "undefined") {
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event as InstallPromptEvent;
+    window.dispatchEvent(new Event("xaritoo:install-available"));
+  });
+}
+
 export default function PwaInstaller() {
   const [promptEvent, setPromptEvent] = useState<InstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [platform, setPlatform] = useState<"android" | "ios" | "other">("other");
 
   useEffect(() => {
+    const userAgent = navigator.userAgent;
+    setPlatform(/android/i.test(userAgent) ? "android" : /iphone|ipad|ipod/i.test(userAgent) ? "ios" : "other");
+    setInstalled(
+      window.matchMedia("(display-mode: standalone)").matches ||
+        ("standalone" in navigator && Boolean(navigator.standalone)),
+    );
+
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js").catch((error) => {
         console.error("Service worker registration failed:", error);
       });
     }
 
-    const onBeforeInstall = (event: Event) => {
-      event.preventDefault();
-      setPromptEvent(event as InstallPromptEvent);
-    };
+    const onInstallAvailable = () => setPromptEvent(deferredInstallPrompt);
     const onInstalled = () => {
       setInstalled(true);
+      deferredInstallPrompt = null;
       setPromptEvent(null);
       setShowHelp(false);
     };
 
-    window.addEventListener("beforeinstallprompt", onBeforeInstall);
+    if (deferredInstallPrompt) setPromptEvent(deferredInstallPrompt);
+    window.addEventListener("xaritoo:install-available", onInstallAvailable);
     window.addEventListener("appinstalled", onInstalled);
     return () => {
-      window.removeEventListener("beforeinstallprompt", onBeforeInstall);
+      window.removeEventListener("xaritoo:install-available", onInstallAvailable);
       window.removeEventListener("appinstalled", onInstalled);
     };
   }, []);
 
   async function installApp() {
-    if (!promptEvent) {
+    const availablePrompt = promptEvent ?? deferredInstallPrompt;
+    if (!availablePrompt) {
       setShowHelp((current) => !current);
       return;
     }
 
-    await promptEvent.prompt();
-    const choice = await promptEvent.userChoice;
+    await availablePrompt.prompt();
+    const choice = await availablePrompt.userChoice;
     if (choice.outcome === "accepted") setInstalled(true);
+    deferredInstallPrompt = null;
     setPromptEvent(null);
   }
+
+  const helpText = platform === "android"
+    ? "For the app install prompt, open this site in Chrome and tap Download App again once Chrome offers installation. You can also open Chrome’s ⋮ menu and choose “Install app” or “Add to Home screen”. If neither option appears, keep the site open for about 30 seconds, then try again."
+    : platform === "ios"
+      ? "Open Xaritoo in Safari, tap Share, choose “Add to Home Screen”, then tap Add."
+      : "Open the browser menu and choose “Install app” or “Add to Home screen”.";
 
   if (installed) return null;
 
@@ -92,7 +117,7 @@ export default function PwaInstaller() {
             lineHeight: 1.5,
           }}
         >
-          Pour installer Xaritoo, ouvre le menu de ton navigateur puis choisis « Ajouter à l’écran d’accueil » ou « Installer l’application ».
+          {helpText}
         </p>
       )}
     </div>
