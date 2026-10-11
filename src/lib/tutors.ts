@@ -1,11 +1,20 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_KEY!);
+function getSupabaseClient() {
+  const url = process.env.SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_KEY;
+
+  if (!url || !serviceKey) {
+    throw new Error("SUPABASE_URL and SUPABASE_SERVICE_KEY must be configured to look up tutors.");
+  }
+
+  return createClient(url, serviceKey);
+}
 
 export type Tutor = { nom: string; domaine: string; numero: string };
 
 export async function findTutor(domain: string): Promise<Tutor | null> {
-  const { data } = await supabase
+  const { data } = await getSupabaseClient()
     .from("tuteurs")
     .select("nom, domaine, numero")
     .ilike("domaine", `%${domain}%`)
