@@ -5,6 +5,7 @@ import ImmersiveEffects from "@/components/effects/immersive-effects";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import XaritooChat from "@/components/chat/xaritoo-chat";
+import WelcomeHelper from "@/components/layout/welcome-helper";
 import { absoluteUrl, defaultDescription, defaultSocialImage, globalKeywords, siteName, siteUrl, socialProfiles } from "@/lib/seo";
 import "../index.css";
 
@@ -105,6 +106,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         {children}
         <Footer />
         <XaritooChat />
+        <WelcomeHelper />
       </body>
     </html>
   );

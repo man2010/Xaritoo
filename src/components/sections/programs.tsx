@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import SectionLabel from "@/components/ui/section-label";
 import { colors as C } from "@/lib/design-tokens";
@@ -383,6 +383,19 @@ function ClubJoinForm() {
 export default function Programs() {
   const [clubOpen, setClubOpen] = useState(false)
 
+  useEffect(() => {
+    const openClubRegistration = () => {
+      setClubOpen(true)
+      window.setTimeout(() => {
+        document.getElementById("club-registration")?.scrollIntoView({ behavior: "smooth", block: "start" })
+      }, 100)
+    }
+
+    window.addEventListener("xaritoo:open-club-registration", openClubRegistration)
+    if (window.location.hash === "#club-registration") openClubRegistration()
+    return () => window.removeEventListener("xaritoo:open-club-registration", openClubRegistration)
+  }, [])
+
   return (
     <section id="programs" style={{ background: C.white, padding: '96px 24px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -510,6 +523,7 @@ export default function Programs() {
         {/* ── Xaritoo Club expanded detail panel ── */}
         {clubOpen && (
           <div
+            id="club-registration"
             className="club-expanded-panel"
             style={{
               marginTop: 24,
