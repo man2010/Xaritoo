@@ -70,7 +70,7 @@ export default function PwaInstaller() {
           whiteSpace: "nowrap",
         }}
       >
-        Télécharger l’app
+        Download App
       </button>
       {showHelp && (
         <p

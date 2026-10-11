@@ -30,7 +30,6 @@ export default function Nav() {
   }, [open])
 
   const links = [
-    { label: 'About', href: '#about' },
     { label: 'Programs', href: '#programs' },
     { label: 'News', href: '/news-gallery' },
     { label: 'Get Involved', href: '#join-as' },
