@@ -69,7 +69,7 @@ export default function PwaInstaller() {
   }
 
   const helpText = platform === "android"
-    ? "For the app install prompt, open this site in Chrome and tap Download App again once Chrome offers installation. You can also open Chrome’s ⋮ menu and choose “Install app” or “Add to Home screen”. If neither option appears, keep the site open for about 30 seconds, then try again."
+    ? "For the install prompt, open this site in Chrome and tap Download App again when the app is ready to install. You can also open Chrome’s ⋮ menu and choose “Install app” or “Add to Home screen”. If neither option appears, keep the site open for about 30 seconds, then try again."
     : platform === "ios"
       ? "Open Xaritoo in Safari, tap Share, choose “Add to Home Screen”, then tap Add."
       : "Open the browser menu and choose “Install app” or “Add to Home screen”.";
