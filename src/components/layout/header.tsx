@@ -5,6 +5,7 @@ import { colors as C } from "@/lib/design-tokens";
 import { usePathname } from "next/navigation";
 import { MENTEE_APPLICATION_URL, MENTOR_APPLICATION_URL } from "@/lib/application-links";
 import Image from "next/image";
+import PwaInstaller from "@/components/layout/pwa-installer";
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
@@ -148,6 +149,7 @@ export default function Nav() {
           >
             Become a Mentee
           </a>
+          <PwaInstaller />
         </nav>
 
         {/* Mobile hamburger */}
@@ -257,6 +259,9 @@ export default function Nav() {
           >
             Become a Mentee
           </a>
+          <div style={{ marginTop: 20 }}>
+            <PwaInstaller />
+          </div>
         </div>
       )}
 
