@@ -3,6 +3,9 @@ frontend:
   phases:
     preBuild:
       commands:
+        - sudo dnf install -y git-lfs
+        - git lfs install --local
+        - git lfs pull
         - npm install --global pnpm@10.34.3
         - pnpm install --frozen-lockfile
     build:
