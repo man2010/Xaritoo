@@ -350,7 +350,14 @@ export default function AccountPortal() {
 
   async function verifySignupCode(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!client || ![6, 8].includes(verificationCode.length)) return;
+    if (!client) {
+      setError("Supabase is not configured. Please contact the Xaritoo team.");
+      return;
+    }
+    if (![6, 8].includes(verificationCode.length)) {
+      setError("Enter the complete 6- or 8-digit code from the email.");
+      return;
+    }
     if (verificationSecondsLeft <= 0) { setError("This code has expired. Request a new one to continue."); return; }
     setBusy(true); setError(""); setNotice("");
     try {
@@ -549,7 +556,7 @@ export default function AccountPortal() {
           {verificationPendingEmail ? <form onSubmit={verifySignupCode} className="account-otp-form">
             <label style={labelStyle}>Email verification code<input required type="text" inputMode="numeric" autoComplete="one-time-code" pattern="(?:[0-9]{6}|[0-9]{8})" maxLength={8} value={verificationCode} onChange={(event) => setVerificationCode(event.target.value.replace(/\D/g, "").slice(0, 8))} className="account-otp-input" aria-label="6- or 8-digit email verification code" /></label>
             <p className={verificationSecondsLeft > 0 ? "account-otp-countdown" : "account-otp-countdown account-otp-countdown--expired"} role="status">{verificationSecondsLeft > 0 ? `Code expires in 00:${String(verificationSecondsLeft).padStart(2, "0")}` : "This code has expired. Request a new one."}</p>
-            <button disabled={busy || verificationCode.length !== 6 || verificationSecondsLeft <= 0} className="account-auth-submit" style={primaryButton}>{busy ? "Verifying…" : "Verify email"}<span aria-hidden="true">→</span></button>
+            <button disabled={busy || ![6, 8].includes(verificationCode.length) || verificationSecondsLeft <= 0} className="account-auth-submit" style={primaryButton}>{busy ? "Verifying…" : "Verify email"}<span aria-hidden="true">→</span></button>
             <p className="account-auth-switch">Didn’t receive the code?<button type="button" disabled={busy || verificationSecondsLeft > 0} onClick={() => void resendSignupCode()}>{verificationSecondsLeft > 0 ? `Resend in 00:${String(verificationSecondsLeft).padStart(2, "0")}` : "Resend code"}</button></p>
             <button type="button" className="account-change-email" onClick={() => { setVerificationPendingEmail(""); setVerificationCode(""); setAuthMode("signup"); setError(""); setNotice(""); }}>Use a different email</button>
           </form> : <>
