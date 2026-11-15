@@ -1,5 +1,32 @@
 import type { NextConfig } from "next";
 
+function supabaseConnectSources() {
+  const configuredUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!configuredUrl) return [];
+
+  try {
+    const supabaseUrl = new URL(configuredUrl);
+    if (supabaseUrl.protocol !== "https:" && supabaseUrl.protocol !== "http:") return [];
+    const websocketProtocol = supabaseUrl.protocol === "https:" ? "wss:" : "ws:";
+    return [supabaseUrl.origin, `${websocketProtocol}//${supabaseUrl.host}`];
+  } catch {
+    return [];
+  }
+}
+
+function supabaseImageSources() {
+  const configuredUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!configuredUrl) return [];
+
+  try {
+    const supabaseUrl = new URL(configuredUrl);
+    if (supabaseUrl.protocol !== "https:" && supabaseUrl.protocol !== "http:") return [];
+    return [supabaseUrl.origin];
+  } catch {
+    return [];
+  }
+}
+
 const securityHeaders = [
   {
     key: "Content-Security-Policy",
@@ -7,10 +34,10 @@ const securityHeaders = [
       "default-src 'self'",
       `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: https://images.unsplash.com https://pub-ca5a60ca01484c16bede7ba44924da59.r2.dev",
+      `img-src 'self' data: https://images.unsplash.com https://pub-ca5a60ca01484c16bede7ba44924da59.r2.dev ${supabaseImageSources().join(" ")}`,
       "media-src 'self' https://pub-ca5a60ca01484c16bede7ba44924da59.r2.dev",
       "font-src 'self' data:",
-      "connect-src 'self' https://pub-ca5a60ca01484c16bede7ba44924da59.r2.dev",
+      `connect-src 'self' https://pub-ca5a60ca01484c16bede7ba44924da59.r2.dev ${supabaseConnectSources().join(" ")}`,
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
@@ -33,6 +60,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "pub-ca5a60ca01484c16bede7ba44924da59.r2.dev" },
+      ...(process.env.NEXT_PUBLIC_SUPABASE_URL ? [{
+        protocol: new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).protocol.replace(":", ""),
+        hostname: new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname,
+      }] : []),
     ],
     formats: ["image/avif", "image/webp"],
   },

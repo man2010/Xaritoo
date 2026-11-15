@@ -2,10 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import type { ReactNode } from "react";
 import ImmersiveEffects from "@/components/effects/immersive-effects";
-import Header from "@/components/layout/header";
-import Footer from "@/components/layout/footer";
-import XaritooChat from "@/components/chat/xaritoo-chat";
-import WelcomeHelper from "@/components/layout/welcome-helper";
+import SiteChrome from "@/components/layout/site-chrome";
 import { absoluteUrl, defaultDescription, defaultSocialImage, globalKeywords, siteName, siteUrl, socialProfiles } from "@/lib/seo";
 import "../index.css";
 
@@ -102,11 +99,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationSchema, websiteSchema]).replace(/</g, "\\u003c") }} />
         <a className="skip-link" href="#main-content">Skip to main content</a>
         <ImmersiveEffects />
-        <Header />
-        {children}
-        <Footer />
-        <XaritooChat />
-        <WelcomeHelper />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

@@ -5,7 +5,6 @@ import { colors as C } from "@/lib/design-tokens";
 import { usePathname } from "next/navigation";
 import { MENTEE_APPLICATION_URL, MENTOR_APPLICATION_URL } from "@/lib/application-links";
 import Image from "next/image";
-import PwaInstaller from "@/components/layout/pwa-installer";
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
@@ -30,6 +29,7 @@ export default function Nav() {
   }, [open])
 
   const links = [
+    { label: 'About', href: '#about' },
     { label: 'Programs', href: '#programs' },
     { label: 'News', href: '/news-gallery' },
     { label: 'Get Involved', href: '#join-as' },
@@ -45,12 +45,14 @@ export default function Nav() {
         left: 0,
         right: 0,
         zIndex: 100,
-        background: scrolled ? C.purpleDark : 'transparent',
-        borderBottom: scrolled ? `1px solid rgba(255,255,255,0.08)` : 'none',
+        background: C.purpleDark,
+        borderBottom: `1px solid rgba(255,255,255,0.08)`,
+        boxShadow: scrolled ? '0 10px 30px rgba(24,10,38,0.2)' : '0 5px 22px rgba(24,10,38,0.12)',
         transition: 'background 0.3s ease, border-color 0.3s ease',
       }}
     >
       <div
+        className="site-header__inner"
         style={{
           maxWidth: 1200,
           margin: '0 auto',
@@ -148,12 +150,12 @@ export default function Nav() {
           >
             Become a Mentee
           </a>
-          <PwaInstaller />
+          <a href="/account" className="nav-account-cta">Sign up / Sign in</a>
         </nav>
 
         {/* Mobile hamburger */}
         <button
-          className="mobile-only"
+          className="mobile-only mobile-menu-toggle"
           onClick={() => setOpen(!open)}
           style={{
             background: 'none',
@@ -258,9 +260,7 @@ export default function Nav() {
           >
             Become a Mentee
           </a>
-          <div style={{ marginTop: 20 }}>
-            <PwaInstaller />
-          </div>
+          <a href="/account" onClick={() => setOpen(false)} className="nav-account-cta nav-account-cta--mobile">Sign up / Sign in</a>
         </div>
       )}
 
@@ -269,6 +269,9 @@ export default function Nav() {
           .hidden-mobile { display: none !important; }
           .mobile-only { display: flex !important; }
         }
+      .nav-account-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; margin-left: 8px; padding: 0 16px; border: 1px solid rgba(255,255,255,.28); border-radius: 9px; color: #fff; background: rgba(255,255,255,.09); font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background .2s, transform .2s; }
+      .nav-account-cta:hover { background: rgba(255,255,255,.17); transform: translateY(-1px); }
+      .nav-account-cta--mobile { margin: 18px 0 0; width: 100%; box-sizing: border-box; }
       `}</style>
     </header>
   )

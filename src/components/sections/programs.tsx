@@ -143,6 +143,9 @@ function ClubJoinForm() {
             <p style={{ fontSize: 14, color: '#746C7A', lineHeight: 1.5, margin: 0 }}>
               As a parent or guardian, please tell us about your child and their academic support needs. Our team will contact you to finalize placement.
             </p>
+            <p style={{ fontSize: 14, color: '#5B2C83', lineHeight: 1.5, margin: '10px 0 0' }}>
+              Looking for an ongoing tutor match or private messages? <a href="/account" style={{ color: '#5B2C83', fontWeight: 700 }}>Create a Xaritoo Club member account</a>.
+            </p>
           </div>
 
           <form onSubmit={submitClubApplication} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
