@@ -16,8 +16,6 @@ const SUPPORT_AREAS = [
   "General Mentorship & Accountability",
   "Other / Multiple Areas",
 ];
-const SIGNUP_CODE_LIFETIME_SECONDS = 30;
-
 type AccountRole = "student" | "tutor" | "admin";
 type Profile = { user_id: string; user_role: AccountRole; full_name: string };
 type StudentProfile = {
@@ -105,9 +103,6 @@ export default function AccountPortal() {
   const [newTutor, setNewTutor] = useState<TutorCard | null>(null);
   const [firstMessage, setFirstMessage] = useState("");
   const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
-  const [verificationPendingEmail, setVerificationPendingEmail] = useState("");
-  const [verificationCode, setVerificationCode] = useState("");
-  const [verificationSecondsLeft, setVerificationSecondsLeft] = useState(0);
   const [signupRole, setSignupRole] = useState<AccountRole>("student");
   const [guardianAttested, setGuardianAttested] = useState(false);
   const [name, setName] = useState("");
@@ -126,14 +121,6 @@ export default function AccountPortal() {
   const [photoUploading, setPhotoUploading] = useState(false);
 
   const client = useMemo(() => configured ? getSupabaseBrowserClient() : null, [configured]);
-
-  useEffect(() => {
-    if (!verificationPendingEmail || verificationSecondsLeft <= 0) return;
-    const timer = window.setInterval(() => {
-      setVerificationSecondsLeft((seconds) => Math.max(0, seconds - 1));
-    }, 1000);
-    return () => window.clearInterval(timer);
-  }, [verificationPendingEmail, verificationSecondsLeft]);
 
   const loadAdminDashboard = useCallback(async () => {
     if (!client) return;
@@ -313,7 +300,6 @@ export default function AccountPortal() {
           password,
           options: {
             data: { account_role: signupRole, full_name: name.trim() },
-            emailRedirectTo: `${window.location.origin}/account`,
           },
         });
         if (signUpError) throw signUpError;
@@ -321,12 +307,8 @@ export default function AccountPortal() {
           setAuthMode("signin");
           setNotice("An account may already use this email. Sign in or use “Forgot password?” to recover it. One email can only have one Xaritoo account.");
         } else if (!data.session) {
-          setVerificationPendingEmail(email.trim());
-          setVerificationCode("");
-          setVerificationSecondsLeft(SIGNUP_CODE_LIFETIME_SECONDS);
-          setNotice("");
-        }
-        else setNotice("Your account is ready.");
+          setNotice("Your account was created, but Supabase still requires email confirmation. Disable “Confirm email” in Supabase Authentication settings, then try signing up again.");
+        } else setNotice("Your account is ready.");
       } else {
         const { error: signInError } = await client.auth.signInWithPassword({ email: email.trim(), password });
         if (signInError) throw signInError;
@@ -345,47 +327,6 @@ export default function AccountPortal() {
       if (resetError) throw resetError;
       setNotice("If an account exists for this email, a password reset link is on its way.");
     } catch (resetError) { setError(authErrorMessage(resetError)); }
-    finally { setBusy(false); }
-  }
-
-  async function verifySignupCode(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!client) {
-      setError("Supabase is not configured. Please contact the Xaritoo team.");
-      return;
-    }
-    if (![6, 8].includes(verificationCode.length)) {
-      setError("Enter the complete 6- or 8-digit code from the email.");
-      return;
-    }
-    if (verificationSecondsLeft <= 0) { setError("This code has expired. Request a new one to continue."); return; }
-    setBusy(true); setError(""); setNotice("");
-    try {
-      const { error: verifyError } = await client.auth.verifyOtp({
-        email: verificationPendingEmail, token: verificationCode, type: "email",
-      });
-      if (verifyError) throw verifyError;
-      setVerificationPendingEmail("");
-      setVerificationCode("");
-      setVerificationSecondsLeft(0);
-      setNotice("Email verified. Your member space is ready.");
-    } catch (verifyError) { setError(authErrorMessage(verifyError)); }
-    finally { setBusy(false); }
-  }
-
-  async function resendSignupCode() {
-    if (!client || !verificationPendingEmail) return;
-    setBusy(true); setError(""); setNotice("");
-    try {
-      const { error: resendError } = await client.auth.resend({
-        type: "signup", email: verificationPendingEmail,
-        options: { emailRedirectTo: `${window.location.origin}/account` },
-      });
-      if (resendError) throw resendError;
-      setVerificationCode("");
-      setVerificationSecondsLeft(SIGNUP_CODE_LIFETIME_SECONDS);
-      setNotice("A new verification code has been sent. Only the latest code will work.");
-    } catch (resendError) { setError(authErrorMessage(resendError)); }
     finally { setBusy(false); }
   }
 
@@ -549,17 +490,10 @@ export default function AccountPortal() {
       {!session ? (
         <section className="account-panel account-auth-panel" style={{ ...panelStyle, maxWidth: 560 }}>
           <div className="account-auth-heading">
-            <span>{verificationPendingEmail ? "EMAIL VERIFICATION" : authMode === "signin" ? "WELCOME BACK" : "XARITOO CLUB"}</span>
-            <h2>{verificationPendingEmail ? "Check your email" : authMode === "signin" ? "Sign in to your account" : "Create your account"}</h2>
-            <p>{verificationPendingEmail ? `Enter the 6- or 8-digit code sent to ${verificationPendingEmail}.` : authMode === "signin" ? "Continue to your conversations and member space." : "Join the community as a student or volunteer tutor."}</p>
+            <span>{authMode === "signin" ? "WELCOME BACK" : "XARITOO CLUB"}</span>
+            <h2>{authMode === "signin" ? "Sign in to your account" : "Create your account"}</h2>
+            <p>{authMode === "signin" ? "Continue to your conversations and member space." : "Join the community as a student or volunteer tutor."}</p>
           </div>
-          {verificationPendingEmail ? <form onSubmit={verifySignupCode} className="account-otp-form">
-            <label style={labelStyle}>Email verification code<input required type="text" inputMode="numeric" autoComplete="one-time-code" pattern="(?:[0-9]{6}|[0-9]{8})" maxLength={8} value={verificationCode} onChange={(event) => setVerificationCode(event.target.value.replace(/\D/g, "").slice(0, 8))} className="account-otp-input" aria-label="6- or 8-digit email verification code" /></label>
-            <p className={verificationSecondsLeft > 0 ? "account-otp-countdown" : "account-otp-countdown account-otp-countdown--expired"} role="status">{verificationSecondsLeft > 0 ? `Code expires in 00:${String(verificationSecondsLeft).padStart(2, "0")}` : "This code has expired. Request a new one."}</p>
-            <button disabled={busy || ![6, 8].includes(verificationCode.length) || verificationSecondsLeft <= 0} className="account-auth-submit" style={primaryButton}>{busy ? "Verifying…" : "Verify email"}<span aria-hidden="true">→</span></button>
-            <p className="account-auth-switch">Didn’t receive the code?<button type="button" disabled={busy || verificationSecondsLeft > 0} onClick={() => void resendSignupCode()}>{verificationSecondsLeft > 0 ? `Resend in 00:${String(verificationSecondsLeft).padStart(2, "0")}` : "Resend code"}</button></p>
-            <button type="button" className="account-change-email" onClick={() => { setVerificationPendingEmail(""); setVerificationCode(""); setAuthMode("signup"); setError(""); setNotice(""); }}>Use a different email</button>
-          </form> : <>
           <form onSubmit={handleAuth} style={{ display: "grid", gap: 14 }}>
             {authMode === "signup" && <>
               <label style={labelStyle}>Account type
@@ -587,7 +521,6 @@ export default function AccountPortal() {
           </form>
           <p className="account-auth-switch">{authMode === "signin" ? "Don’t have an account?" : "Already have an account?"}<button type="button" onClick={() => { setError(""); setNotice(""); setAuthMode(authMode === "signin" ? "signup" : "signin"); }}>{authMode === "signin" ? "Create an account" : "Sign in"}</button></p>
           {authMode === "signup" && <p className="account-auth-privacy">Students under 18 must use this space with a parent or guardian. Keep sensitive medical and financial details out of profile notes and messages.</p>}
-          </>}
         </section>
       ) : !profile ? (
         <section className="account-panel" style={panelStyle}>Loading your secure profile…</section>

@@ -42,9 +42,11 @@ SUPABASE_SECRET_KEY=sb_secret_...
 
 The first two variables are used in the browser and must be a **publishable** key. The secret key is server-only and is used by the existing WhatsApp webhook's tutor lookup. The app accepts the older `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_KEY` names for backward compatibility, but new setups should use the current publishable/secret keys. Never use `NEXT_PUBLIC_` on a secret key.
 
-## 4. Gmail SMTP and six-digit signup verification
+## 4. Simple email signup without a verification code
 
-In Supabase **Authentication** → **SMTP Settings**, enable custom SMTP and use:
+In Supabase **Authentication** → **Sign In / Providers** → **Email**, leave Email sign-in enabled and switch **Confirm email** off. New users will then be signed in immediately after registration. This is the setting that removes the signup code step; changing the email template or the website alone cannot disable Supabase's confirmation requirement. Existing accounts that were created but never confirmed may need to be confirmed or recreated separately.
+
+No SMTP email is sent during signup with confirmation disabled. Configure custom SMTP only if Xaritoo should send password-reset or other Auth emails. If you configure Gmail SMTP, use:
 
 | Setting | Value |
 | --- | --- |
@@ -57,16 +59,12 @@ In Supabase **Authentication** → **SMTP Settings**, enable custom SMTP and use
 
 Google requires 2-Step Verification to create an App Password. Generate it in the Google Account for `xaritoomentorship@gmail.com`, then enter it only in the Supabase SMTP settings; never add it to `.env.local`, the repo, or this chat. See [Google App Password requirements](https://support.google.com/accounts/answer/185833?hl=en) and [Supabase custom SMTP setup](https://supabase.com/docs/guides/auth/auth-smtp).
 
-Next, in **Authentication** → **Sign In / Providers** → **Email**, keep email confirmations enabled, set the email OTP length to **6**, and set **Email OTP Expiration** to **30 seconds**. The `{{ .Token }}` template variable displays the length Supabase Auth generates; the template itself cannot force six digits. This website accepts both 6- and 8-digit signup confirmation tokens so a project configured for 8 digits does not truncate a user's code. This Auth setting is enforced server-side; it also shortens the validity of other Auth email OTPs and links, including password resets. In **Authentication** → **Email Templates** → **Confirm signup**, set the subject to `Your Xaritoo Club verification code` and replace the body with the contents of [`supabase/templates/confirm-signup.html`](supabase/templates/confirm-signup.html). Confirm the template contains `{{ .Token }}` and remove `{{ .ConfirmationURL }}`. Save the template, then request a **new** signup email; previously sent emails remain links and are not changed retroactively.
-
-The account form accepts the 6- or 8-digit signup token, shows a 30-second countdown, blocks expired codes in the UI, and offers a resend button when the countdown ends. To allow resending at 30 seconds, open **Authentication** → **Rate Limits** and set **Signup confirmation request** to **30 seconds** (the default is 60 seconds). The Auth server still decides whether a code is valid; changing only the website countdown does not revoke it. Supabase's built-in sender is limited to two emails per hour project-wide; custom SMTP avoids that built-in sender restriction, though other Auth rate limits still apply. See [Supabase OTP email templates](https://supabase.com/docs/guides/auth/auth-email-templates), [OTP expiry](https://supabase.com/docs/guides/auth/auth-email-passwordless), and [Auth rate limits](https://supabase.com/docs/guides/auth/rate-limits).
-
 For production, add the same variables in **AWS Amplify** → your app → **Hosting** → **Environment variables**. Mark `SUPABASE_SECRET_KEY` as a secret if the console offers that option. The public URL and publishable key may be exposed to the client; the RLS policies are what restrict user access. `NEXT_PUBLIC_SUPABASE_URL` must be present when Next.js starts/builds because the Content Security Policy derives the allowed Supabase API and Realtime origins from it. Restart the local dev server after changing `next.config.ts` or the Supabase URL.
 
 ## 5. Enable email sign-in
 
 1. Go to **Authentication** → **Sign In / Providers** (the Dashboard may label this **Auth** → **Providers**).
-2. Enable **Email** sign-in and configure email confirmation to match your program's onboarding policy.
+2. Enable **Email** sign-in. Keep **Confirm email** off for the no-code signup flow described above.
 3. Go to **Authentication** → **URL Configuration**.
 4. Set the **Site URL** to the deployed Xaritoo URL.
 5. Add redirect URLs for the deployed account page (for example `https://YOUR_DOMAIN/account`) and local development (`http://localhost:3000/account`).

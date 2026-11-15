@@ -298,12 +298,6 @@ footer a:hover {
 .account-auth-switch button { padding: 0; color: #5b2c83; border: 0; background: transparent; font-size: inherit; font-weight: 750; cursor: pointer; }
 .account-auth-switch button:disabled { color: #a69cab; cursor: not-allowed; }
 .account-auth-privacy { margin: 14px 0 0; color: #746c7a; font-size: 12px; line-height: 1.6; text-align: center; }
-.account-otp-form { display: grid; gap: 16px; }
-.account-otp-countdown { margin: -8px 0 0; color: #746c7a; font-size: 12px; text-align: center; }
-.account-otp-countdown--expired { color: #8a2925; font-weight: 700; }
-.account-otp-input { width: 100%; box-sizing: border-box; min-height: 64px; padding: 10px 12px; border: 1px solid rgba(91,44,131,.2); border-radius: 12px; color: #32194d; background: #fbf9fd; font: inherit; font-size: 28px; font-weight: 750; letter-spacing: .5em; text-align: center; }
-.account-otp-input:focus { outline: 3px solid rgba(181,138,42,.2); border-color: #b58a2a; }
-.account-change-email { justify-self: center; padding: 4px; color: #746c7a; border: 0; background: transparent; font-size: 12px; cursor: pointer; }
 .account-profile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 .account-signed-in { flex-wrap: wrap; }
 .account-chat-composer input { min-width: 0; }
