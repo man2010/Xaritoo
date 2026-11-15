@@ -36,6 +36,15 @@ type Conversation = {
   other_name: string; last_message: string; updated_at: string;
 };
 type ChatMessage = { id: string; sender_user_id: string; body: string; created_at: string };
+type MemberNotification = {
+  id: string;
+  notification_type: "tutor_status" | "new_message";
+  title: string;
+  body: string;
+  details: { conversation_id?: string; support_area?: string; status?: string; reason?: string };
+  created_at: string;
+  read_at: string | null;
+};
 type AdminTutor = TutorProfile & { user_id: string; full_name: string; email: string; created_at: string; approved_at: string | null };
 type AdminMember = { user_id: string; full_name: string; user_role: AccountRole; created_at: string; email: string };
 type AdminConversation = { id: string; support_area: string; status: string; created_at: string; updated_at: string; student_name: string; tutor_name: string; message_count: number };
@@ -110,6 +119,9 @@ export default function AccountPortal() {
   const [directoryArea, setDirectoryArea] = useState("");
   const [dashboardSection, setDashboardSection] = useState<"overview" | "tutors" | "conversations" | "profile">("overview");
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [notificationMenuOpen, setNotificationMenuOpen] = useState(false);
+  const [selectedNotificationId, setSelectedNotificationId] = useState<string | null>(null);
+  const [notifications, setNotifications] = useState<MemberNotification[]>([]);
   const [adminDashboard, setAdminDashboard] = useState<AdminDashboardData | null>(null);
   const [photoUploading, setPhotoUploading] = useState(false);
 
@@ -138,6 +150,29 @@ export default function AccountPortal() {
       p_note: note.trim() || null,
     });
     if (updateError) throw updateError;
+  }, [client]);
+
+  const loadNotifications = useCallback(async (userId: string) => {
+    if (!client) return;
+    const { data, error: notificationError } = await client
+      .from("xaritoo_notifications")
+      .select("id,notification_type,title,body,details,created_at,read_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(50);
+    if (notificationError) throw notificationError;
+    setNotifications((data ?? []) as MemberNotification[]);
+  }, [client]);
+
+  const markNotificationRead = useCallback(async (notificationId: string) => {
+    if (!client) return;
+    const readAt = new Date().toISOString();
+    setNotifications((current) => current.map((notification) =>
+      notification.id === notificationId ? { ...notification, read_at: notification.read_at || readAt } : notification,
+    ));
+    const { error: readError } = await client.from("xaritoo_notifications")
+      .update({ read_at: readAt }).eq("id", notificationId);
+    if (readError) throw readError;
   }, [client]);
 
   const loadAccount = useCallback(async (currentSession: Session) => {
@@ -210,7 +245,7 @@ export default function AccountPortal() {
     const { data: listener } = client.auth.onAuthStateChange((_event, nextSession) => {
       setSession(nextSession);
       if (!nextSession) {
-        setProfile(null); setTutor(null); setTutors([]); setConversations([]); setAdminDashboard(null);
+        setProfile(null); setTutor(null); setTutors([]); setConversations([]); setAdminDashboard(null); setNotifications([]);
         return;
       }
       queueMicrotask(() => loadAccount(nextSession).catch((loadError) =>
@@ -219,6 +254,25 @@ export default function AccountPortal() {
     });
     return () => { alive = false; listener.subscription.unsubscribe(); };
   }, [client, loadAccount]);
+
+  useEffect(() => {
+    const userId = profile?.user_id;
+    if (!client || !userId || profile?.user_role === "admin") return;
+    let alive = true;
+    void loadNotifications(userId).catch((loadError) => {
+      if (alive) setError(loadError instanceof Error ? loadError.message : "Could not load notifications.");
+    });
+    const channel = client.channel(`xaritoo-notifications-${userId}`)
+      .on("postgres_changes", {
+        event: "*", schema: "public", table: "xaritoo_notifications", filter: `user_id=eq.${userId}`,
+      }, () => {
+        void loadNotifications(userId).catch((loadError) => {
+          if (alive) setError(loadError instanceof Error ? loadError.message : "Could not refresh notifications.");
+        });
+      })
+      .subscribe();
+    return () => { alive = false; void client.removeChannel(channel); };
+  }, [client, loadNotifications, profile?.user_id, profile?.user_role]);
 
   useEffect(() => {
     if (!client || !profile || profile.user_role !== "student") return;
@@ -534,6 +588,34 @@ export default function AccountPortal() {
         <>
           <div className="member-topbar">
             <a href="/" className="member-topbar__brand" aria-label="Xaritoo home"><img src="/images/xaritoo-logo.jpeg" alt="" /><span>XARITOO</span></a>
+            <div className="member-topbar__actions">
+            {profile.user_role !== "admin" && <div className="member-notifications">
+              <button type="button" className="member-notification-trigger" aria-label={`Notifications${notifications.filter((item) => !item.read_at).length ? `, ${notifications.filter((item) => !item.read_at).length} unread` : ""}`} aria-expanded={notificationMenuOpen} onClick={() => { setNotificationMenuOpen((open) => !open); setSelectedNotificationId(null); }}>
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
+                {notifications.some((item) => !item.read_at) && <span className="member-notification-count">{Math.min(notifications.filter((item) => !item.read_at).length, 99)}</span>}
+              </button>
+              {notificationMenuOpen && <section className="member-notification-panel" aria-label="Notifications">
+                <header><div><strong>Notifications</strong><small>{notifications.filter((item) => !item.read_at).length} unread</small></div><button type="button" aria-label="Close notifications" onClick={() => setNotificationMenuOpen(false)}>×</button></header>
+                <div className="member-notification-list">
+                  {notifications.length === 0 ? <p className="member-notification-empty">You’re all caught up. Profile updates and new messages will appear here.</p> : notifications.map((item) => <button key={item.id} type="button" className={`member-notification-item${item.read_at ? "" : " member-notification-item--unread"}`} onClick={() => {
+                    setSelectedNotificationId(item.id);
+                    if (!item.read_at) void markNotificationRead(item.id).catch((readError) => setError(readError instanceof Error ? readError.message : "Could not mark notification as read."));
+                  }}>
+                    <span className={`member-notification-kind${item.notification_type === "new_message" ? " member-notification-kind--message" : ""}`}>{item.notification_type === "new_message" ? "✉" : "✓"}</span>
+                    <span className="member-notification-copy"><strong>{item.title}</strong><small>{item.body}</small><time>{new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(item.created_at))}</time></span>
+                    {!item.read_at && <i aria-label="Unread" />}
+                  </button>)}
+                </div>
+                {notifications.find((item) => item.id === selectedNotificationId) && (() => {
+                  const item = notifications.find((entry) => entry.id === selectedNotificationId)!;
+                  return <div className="member-notification-detail"><strong>{item.title}</strong><p>{item.body}</p>{item.details.status && <small>Status: {item.details.status}</small>}{item.details.reason && <p><strong>Admin feedback:</strong> {item.details.reason}</p>}{item.details.conversation_id && <button type="button" onClick={() => {
+                    setNotificationMenuOpen(false);
+                    setDashboardSection("conversations");
+                    void openConversation(item.details.conversation_id!);
+                  }}>Open conversation{item.details.support_area ? ` · ${item.details.support_area}` : ""} →</button>}</div>;
+                })()}
+              </section>}
+            </div>}
             <div className="member-profile-menu">
               <button type="button" className="member-avatar" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded={profileMenuOpen} onClick={() => setProfileMenuOpen((open) => !open)}>
                 {(tutor?.photo_url || (typeof session.user.user_metadata?.avatar_url === "string" ? session.user.user_metadata.avatar_url : "")) ? <img src={tutor?.photo_url || String(session.user.user_metadata.avatar_url)} alt="" /> : <span>{(profile.full_name || session.user.email || "X").trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase()}</span>}
@@ -543,6 +625,7 @@ export default function AccountPortal() {
                 <span>{profile.user_role === "student" ? "Student / guardian" : profile.user_role === "admin" ? "Xaritoo administrator" : "Volunteer tutor"}</span>
                 <button type="button" role="menuitem" onClick={() => { setProfileMenuOpen(false); void signOut(); }}>Log out</button>
               </div>}
+            </div>
             </div>
           </div>
 
@@ -707,6 +790,10 @@ function AdminWorkspace({ data, onStatusChange, onRefresh }: {
   const formatDate = (value: string) => new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
 
   const handleStatusChange = async (tutor: AdminTutor, status: string) => {
+    if (status === "rejected" && !reviewNote.trim()) {
+      setSubmitError("Enter a rejection reason first. The tutor will receive this feedback in their notifications.");
+      return;
+    }
     setSubmittingTutorId(tutor.id);
     setSubmitError("");
     setSubmitSuccess("");
@@ -801,6 +888,7 @@ function AdminWorkspace({ data, onStatusChange, onRefresh }: {
     {section === "overview" && <>
       <div className="admin-stats">{statItems.map(([label, value, hint]) => <article key={label}><span>{label}</span><strong>{value}</strong><small>{hint}</small></article>)}</div>
       <section className="admin-section"><div className="admin-section__heading"><div><h2>Applications to review</h2><p>New tutors stay hidden from students until approved.</p></div><button type="button" onClick={() => setSection("approvals")}>View all applications →</button></div>
+        {data.tutors.some((tutor) => tutor.approval_status === "pending") && <div className="admin-filters"><label className="admin-filters__note">Rejection reason (required to reject)<input value={reviewNote} onChange={(event) => setReviewNote(event.target.value)} maxLength={1000} placeholder="This feedback will be sent to the tutor" /></label></div>}
         {data.tutors.filter((tutor) => tutor.approval_status === "pending").slice(0, 3).map(tutorCard)}
         {summary.pending === 0 && <p className="admin-empty">You’re all caught up. New tutor applications will appear here.</p>}
       </section>
@@ -810,7 +898,7 @@ function AdminWorkspace({ data, onStatusChange, onRefresh }: {
     </>}
 
     {section === "approvals" && <section className="admin-section"><div className="admin-section__heading"><div><h2>Tutor applications</h2><p>Review complete profiles and choose the appropriate listing status.</p></div></div>
-      <div className="admin-filters"><label>Application status<select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}><option value="pending">Pending review</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="paused">Paused</option><option value="all">All applications</option></select></label><label>Search<input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Name, email, subject…" /></label><label className="admin-filters__note">Review note (optional)<input value={reviewNote} onChange={(event) => setReviewNote(event.target.value)} maxLength={1000} placeholder="Saved in the admin audit log" /></label></div>
+      <div className="admin-filters"><label>Application status<select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}><option value="pending">Pending review</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="paused">Paused</option><option value="all">All applications</option></select></label><label>Search<input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Name, email, subject…" /></label><label className="admin-filters__note">Rejection reason (required to reject)<input value={reviewNote} onChange={(event) => setReviewNote(event.target.value)} maxLength={1000} placeholder="This feedback will be sent to the tutor" /></label></div>
       {visibleTutors.length ? visibleTutors.map(tutorCard) : <p className="admin-empty">No tutor applications match this view.</p>}
     </section>}
 
