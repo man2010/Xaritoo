@@ -29,11 +29,12 @@ export default function Nav() {
   }, [open])
 
   const links = [
-    { label: 'About', href: '#about' },
-    { label: 'Programs', href: '#programs' },
+    { label: 'About', href: '/about' },
+    { label: 'Programs', href: '/programs' },
+    { label: 'Impact', href: '/impact' },
+    { label: 'Framework', href: '/framework' },
+    { label: 'Get Involved', href: '/get-involved' },
     { label: 'News', href: '/news-gallery' },
-    { label: 'Get Involved', href: '#join-as' },
-    { label: 'Contact', href: '#contact' },
   ]
 
   return (
@@ -83,7 +84,7 @@ export default function Nav() {
         </a>
 
         {/* Desktop nav */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: 8 }} className="hidden-mobile">
+        <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }} className="hidden-mobile">
           {links.map((l) => (
             <a
               key={l.href}
@@ -98,9 +99,9 @@ export default function Nav() {
               style={{
                 color: l.href === '/news-gallery' && pathname === '/news-gallery' ? C.goldLight : 'rgba(255,255,255,0.82)',
                 textDecoration: 'none',
-                fontSize: 15,
+                fontSize: 14,
                 fontWeight: 500,
-                padding: '6px 12px',
+                padding: '6px 8px',
                 borderRadius: 6,
                 transition: 'color 0.2s',
               }}
@@ -120,12 +121,12 @@ export default function Nav() {
               background: C.goldPrimary,
               color: C.textDark,
               textDecoration: 'none',
-              fontSize: 14,
-              fontWeight: 600,
-              padding: '8px 18px',
+              fontSize: 13,
+              fontWeight: 650,
+              padding: '7px 12px',
               borderRadius: 8,
               transition: 'background 0.2s',
-              marginLeft: 8,
+              marginLeft: 4,
             }}
             onMouseEnter={(e) => (e.currentTarget.style.background = '#C99A30')}
             onMouseLeave={(e) => (e.currentTarget.style.background = C.goldPrimary)}
@@ -140,9 +141,9 @@ export default function Nav() {
             style={{
               color: C.white,
               textDecoration: 'none',
-              fontSize: 14,
-              fontWeight: 600,
-              padding: '8px 14px',
+              fontSize: 13,
+              fontWeight: 650,
+              padding: '7px 11px',
               borderRadius: 8,
               border: '1px solid rgba(255,255,255,0.28)',
               marginLeft: 2,
@@ -237,6 +238,7 @@ export default function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
+            className="mobile-nav-cta mobile-nav-cta--mentor"
             style={{
               display: 'inline-block',
               marginTop: 16,
@@ -256,6 +258,7 @@ export default function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
+            className="mobile-nav-cta mobile-nav-cta--mentee"
             style={{ display: 'inline-block', marginTop: 16, marginLeft: 10, color: C.white, textDecoration: 'none', fontSize: 15, fontWeight: 600, padding: '9px 18px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.3)' }}
           >
             Become a Mentee
@@ -272,6 +275,7 @@ export default function Nav() {
       .nav-account-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; margin-left: 8px; padding: 0 16px; border: 1px solid rgba(255,255,255,.28); border-radius: 9px; color: #fff; background: rgba(255,255,255,.09); font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background .2s, transform .2s; }
       .nav-account-cta:hover { background: rgba(255,255,255,.17); transform: translateY(-1px); }
       .nav-account-cta--mobile { margin: 18px 0 0; width: 100%; box-sizing: border-box; }
+      .mobile-navigation .mobile-nav-cta { display: flex !important; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 12px 0 0 !important; padding: 11px 14px !important; font-size: 14px !important; white-space: normal; text-align: center; }
       `}</style>
     </header>
   )
